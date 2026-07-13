@@ -1,6 +1,6 @@
-import './App.css'
-import TodoList from './TodoList.jsx';
+import './App.css';
 import TodoForm from './TodoForm.jsx';
+import TodoList from './TodoList.jsx';
 
 function App() {
 
@@ -20,6 +20,3 @@ function App() {
 }
 
 export default App;
-
-
-// Question: make function App return jsx files?
