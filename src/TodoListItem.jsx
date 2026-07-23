@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-function TodoListItem(){
+function TodoListItem({todo}) {
 
-    // const [todoList, SetTodoList] = useState(todoList);
+    // const [todo, Settodo] = useState(todo);
 
-    // return ( <ul> {todoList.map(todo => {todo.title})} </ul>);
+    // return ( <ul> {todoListItem.map(todo => {todo.title})} </ul>);
 
-};
+    return <li> { todo.title } </li>;
+}
 
-export default TodoListItem();
+export default TodoListItem;
