@@ -5,12 +5,12 @@ import { useState } from 'react';
 
 function App() {
 
-  const [todoList, setTodoList] = useState([]);
+  const [todoList, SetTodoList] = useState([]);
 
   function addTodo(todoTitle){
       let todo = [{id: Date.now(), title: todoTitle}]
 
-      return (setTodoList( todo => [...todoList, { todo }]));
+      return SetTodoList( todoList =>[...todo, ...todoList]);
   }
 
   return (
