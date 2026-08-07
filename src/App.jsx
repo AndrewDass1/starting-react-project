@@ -10,18 +10,20 @@ function App() {
   function addTodo(todoTitle){
       let todo = [{id: Date.now(), title: todoTitle, isCompleted: false}]
 
-      function completeTodo(id){
-        let checkIDs = (id == todo.id) ? todo.isCompleted == true : todo.isCompleted == false
-      }
-
       return SetTodoList( todoList =>[...todo, ...todoList]);
+  }
+
+  function completeTodo(id){
+    let checkIDs = (id == todo.id) ? {...todo, isCompleted: true} : {...todo, isCompleted: false}
+
+    todoList.map(checkIDs)
   }
 
   return (
     <div>
       <h1>My Todo List</h1>
       <TodoList todoList={todoList} 
-        onCompleteTodo
+        onCompleteTodo={completeTodo}
       />
       <TodoForm onAddTodo={addTodo} />
     </div>

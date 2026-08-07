@@ -10,7 +10,7 @@ function TodoForm({ onAddTodo }) {
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    if (todoTitle && todoTitle !== "") {
+    if (workingTodoTitle && workingTodoTitle !== "") {
       onAddTodo(workingTodoTitle);
       inputRef.current.focus();
     }
@@ -25,7 +25,7 @@ function TodoForm({ onAddTodo }) {
         id="todoTitle"
         name="todoTitle"
         value={workingTodoTitle}
-        onChange={event.target.value}
+        onChange={event.currentTarget.value}
         placeholder={'Todo text'}
         required
       />
