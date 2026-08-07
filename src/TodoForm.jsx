@@ -12,6 +12,7 @@ function TodoForm({ onAddTodo }) {
 
     if (workingTodoTitle && workingTodoTitle !== "") {
       onAddTodo(workingTodoTitle);
+      setWorkingTodoTitle = '';
       inputRef.current.focus();
     }
   };
@@ -25,7 +26,7 @@ function TodoForm({ onAddTodo }) {
         id="todoTitle"
         name="todoTitle"
         value={workingTodoTitle}
-        onChange={event.currentTarget.value}
+        onChange={() => setWorkingTodoTitle(event.target.value)}
         placeholder={'Todo text'}
         required
       />
