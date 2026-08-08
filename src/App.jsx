@@ -14,12 +14,9 @@ function App() {
   }
 
   function completeTodo(id){
-    let newtoDo = {...todo, isCompleted: true};
-    let checkIDs = (id == SetTodoList.id) ? newtoDo : {...todo, isCompleted: false}
+    let checkIDs = (id == todoList.id) ? todoList => ([{...todo, isCompleted: true}]) : {...todo, isCompleted: false}
 
-    let checkCondition = SetTodoList.map(checkIDs)
-
-    SetTodoList(todoList => [...todoList, checkCondition]);
+    return todoList.map(checkIDs);
   }
 
   return (
