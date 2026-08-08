@@ -5,14 +5,14 @@ import { useState } from 'react';
 function TodoForm({ onAddTodo }) {
   const inputRef = useRef();
 
-  const [workingTodoTitle, setWorkingTodoTitle] = useState('');
+  let [workingTodoTitle, setWorkingTodoTitle] = useState('');
 
   const handleAddTodo = (event) => {
     event.preventDefault();
 
     if (workingTodoTitle && workingTodoTitle !== "") {
       onAddTodo(workingTodoTitle);
-      setWorkingTodoTitle = '';
+      setWorkingTodoTitle("");
       inputRef.current.focus();
     }
   };
