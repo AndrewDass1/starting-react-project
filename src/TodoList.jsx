@@ -8,7 +8,7 @@ function TodoList({todoList}) {
     // const [filteredTodoList, setFilteredTodoList] = useState([]);
     let filteredTodoList = [...todoList];
 
-    let checkIfTrue = todoList.length > 0 && todoList[0].isCompleted == true ? (todo) => setFilteredTodoList([...filteredTodoList, todo]) : '';
+    // let checkIfTrue = todoList.length > 0 && todoList[0].isCompleted == true ? (todo) => setFilteredTodoList([...filteredTodoList, todo]) : '';
 
     // console.log(filteredTodoList)
 
