@@ -5,9 +5,9 @@ import { useState } from 'react';
 function TodoList({todoList, completeTodo}) {
 
 
-    console.log(todoList[0])
+    // console.log(todoList[0])
 
-    console.log(todoList.length);
+    // console.log(todoList.length);
 
     let filteredTodoList;
 
