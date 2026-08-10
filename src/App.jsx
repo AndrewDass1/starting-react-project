@@ -7,6 +7,12 @@ function App() {
 
   const [todoList, SetTodoList] = useState([]);
 
+  console.log(todoList);
+  console.log(todoList[0]);
+
+  let condition = todoList.length > 0 ? console.log(todoList[0].id) : '';
+  // console.log(condition);
+
   function addTodo(todoTitle){
       let todo = [{id: Date.now(), title: todoTitle, isCompleted: false}]
 
@@ -14,13 +20,11 @@ function App() {
   }
 
   function completeTodo(id){
-    // let checkIDs = (id == todoList.id) ? todoList => ([{...todo, isCompleted: true}]) : {...todo, isCompleted: false}
-    let checkIDs = todoList[0].isCompleted = true
+    const [trueToDo, setTrueToDo] = useState('');
 
-    let elementsIsTrue = todoList.map(checkIDs);
-    console.log(elementsIsTrue);
-
-    return elementsIsTrue;
+    todoList.map( (todo) => id == todo.id ? setTrueToDo({...todo, isCompleted: true}) : setTrueToDo({...todo, isCompleted: false}))
+    
+    return setTrueToDo();
   }
 
   return (
