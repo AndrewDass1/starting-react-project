@@ -11,7 +11,7 @@ function TodoForm({ onAddTodo }) {
     event.preventDefault();
 
     // const todoTitle = event.target.todoTitle.value.trim();
-    if (todoTitle && todoTitle !== "") {
+    if (workingTodoTitle && workingTodoTitle !== "") {
       onAddTodo(workingTodoTitle);
       // event.target.reset();
       setWorkingTodoTitle('');
