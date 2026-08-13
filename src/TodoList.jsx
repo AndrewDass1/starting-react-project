@@ -1,25 +1,10 @@
 import TodoListItem from './TodoListItem.jsx';
 
-import { useState } from 'react';
+function TodoList({todoList, onCompleteTodo}) {
 
-function TodoList({todoList, completeTodo}) {
+    const filteredTodoList = (todo) => todoList.filter(todo.isCompleted = true)
 
-
-    // console.log(todoList[0])
-
-    // console.log(todoList.length);
-
-    let filteredTodoList;
-
-    // let todoListExists = todoList.length > 0 ? (filteredTodoList = todoList.filter(todoList[0].isCompleted = true)) : '';
-    
-    // console.log(todoList[0].isCompleted)
-
-    let statement = todoList.length == 0 ? "Add todo above to get started" : <ul> {todoList.map( (todo) => <TodoListItem key={todo.id} todo={todo} onCompleteTodo={completeTodo}/> ) } </ul> 
-
-
-
-    return statement;
+    return (filteredTodoList.length == 0 ? (<p> Add todo above to get started </p>) : <ul> {todoList.map( (todo) => <TodoListItem key={todo.id} todo={todo} onCompleteTodo={onCompleteTodo}/> ) } </ul> );
 }
 
 export default TodoList;
