@@ -11,9 +11,6 @@ function TodoForm({ onAddTodo }) {
 
   const [workingTodoTitle, setWorkingTodoTitle] = useState('');
 
-  const [workingTitle, setWorkingTitle] = useState( (todo) => isValidTodoTitle);
-
-
   const handleAddTodo = (event) => {
     event.preventDefault();
 
@@ -31,9 +28,7 @@ function TodoForm({ onAddTodo }) {
       <TextInputWithLabel
         ref={inputRef}
         value={workingTodoTitle} 
-        // value={handleCancel.setWorkingTitle}
         onChange={(event)=>setWorkingTodoTitle(event.target.value)}
-        // onChange={handleEdit}
         elementId="todoTitle"
         labelText="Todo"
       >      
