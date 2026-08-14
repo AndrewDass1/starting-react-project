@@ -5,14 +5,16 @@ import TextInputWithLabel from '../../shared/TextInputWithLabel.jsx';
 function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
     const [isEditing, setIsEditing] = useState(false);
 
+    const [workingTitle, setWorkingTitle] = useState(todo.title);
+
     function handleCancel() {
-    setWorkingTitle((todo) => isValidTodoTitle);
-    // Fix setIsEditing
-    // setIsEditing(false);
+        setWorkingTitle(todo.title);
+        // Fix setIsEditing
+        // setIsEditing(false);
     }
 
     function handleEdit(event) {
-        setWorkingTodoTitle(event.target.value);
+        setWorkingTitle(event.target.value);
     }
 
     function handleUpdate(event) {
@@ -29,7 +31,7 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
             <form onSubmit={handleUpdate}>
                 {isEditing ? (
                     <>
-                        <TextInputWithLabel value={todo.title}/>
+                        <TextInputWithLabel value={todo.title} onChange={handleEdit}/>
                         <button onClick={handleCancel}> Cancel </button>
                         <button onClick={handleUpdate}> Update </button>
                     </>
