@@ -11,16 +11,8 @@ function TodoForm({ onAddTodo }) {
 
   const [workingTodoTitle, setWorkingTodoTitle] = useState('');
 
-  const [workingTitle, setWorkingTitle] = useState((todo)=>todo.title)
+  const [workingTitle, setWorkingTitle] = useState( (todo) => isValidTodoTitle);
 
-  // how to make handleCancel reset isEditing state value to false?
-  function handleCancel() {
-    return setWorkingTitle((todo) => todo.title);
-  }
-
-  function handleEdit () {
-    return setWorkingTitle((event) => event.target.value)
-  }
 
   const handleAddTodo = (event) => {
     event.preventDefault();
@@ -38,18 +30,16 @@ function TodoForm({ onAddTodo }) {
     <form onSubmit={handleAddTodo}>
       <TextInputWithLabel
         ref={inputRef}
-        // value={workingTodoTitle}
-        value={workingTitle}
-        onChange={handleEdit}
-        // onChange={(event)=>setWorkingTodoTitle(event.target.value)}
+        value={workingTodoTitle} 
+        // value={handleCancel.setWorkingTitle}
+        onChange={(event)=>setWorkingTodoTitle(event.target.value)}
+        // onChange={handleEdit}
         elementId="todoTitle"
         labelText="Todo"
-      >
+      >      
 
       </TextInputWithLabel>
-
-      <button onClick={handleCancel}> "Cancel" </button>
-
+      
       <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)}>
         Add Todo
       </button>
