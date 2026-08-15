@@ -15,7 +15,7 @@ function TodoForm({ onAddTodo }) {
     event.preventDefault();
 
     // const todoTitle = event.target.todoTitle.value.trim();
-    if (workingTodoTitle && workingTodoTitle !== "") {
+    if (workingTodoTitle && isValidTodoTitle(workingTodoTitle)) {
       onAddTodo(workingTodoTitle);
       //onAddTodo(isValidTodoTitle);
       // event.target.reset();
