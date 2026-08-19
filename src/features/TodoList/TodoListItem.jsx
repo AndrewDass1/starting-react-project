@@ -15,7 +15,7 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
     }
 
     // fix needed
-    function handleEdit() {
+    function handleEdit(event) {
         setWorkingTitle(event.target.value);
     }
 
