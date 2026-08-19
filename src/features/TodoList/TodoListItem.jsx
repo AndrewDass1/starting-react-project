@@ -14,23 +14,20 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
         setIsEditing(false);
     }
 
-    // fix needed - 
+    // fix needed
     function handleEdit() {
-        setWorkingTitle( event => event.target.value);
+        setWorkingTitle(event.target.value);
     }
 
     // Fix handleUpdate - needs validation helper
     function handleUpdate(event) {
-        event.preventDefault()
-        if (isEditing == true) {
-            return (
-                onUpdateTodo( (todo) => [...todo, isValidTodoTitle(workingTitle)]),  
-                setIsEditing(false) 
-            )  
-        }
-        else {
+        if(!isEditing) return;
+        event.preventDefault();
 
-        }  
+        if(!isValidTodoTitle(workingTitle)) return;
+
+        onUpdateTodo({...todo, title: workingTitle});
+        setIsEditing(false);
     }
 
     return (
@@ -38,9 +35,9 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
             <form onSubmit={handleUpdate}>
                 {isEditing ? (
                     <>
-                        <TextInputWithLabel value={workingTitle} onChange={handleEdit}/>
+                        <TextInputWithLabel value={workingTitle} elementId={`todo-${todo.id}`} labelText="Todo" onChange={handleEdit}/>
                         <button type="button" onClick={handleCancel}> Cancel </button>
-                        <button type="button" onClick={handleUpdate}> Update </button>
+                        <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)}> Update </button>
                     </>
                 ) : (
                     <>
