@@ -17,13 +17,13 @@ function App() {
 
 
   function completeTodo(id) {
-    SetTodoList( (getToDoList) => getToDoList.map( (todo) => (todo.id == id) ? {...todo, isCompleted: true}  : todo ) )
+    SetTodoList( (getToDoList) => getToDoList.map( (todo) => (todo.id == id) ? {...todo, isCompleted: !todo.isCompleted}  : todo ) )
   }
 
   function updateTodo(editedTodo){
-    const updatedTodos = SetTodoList( (getToDoList) => getToDoList.map( (todo) => (todo.id == editedTodo.id) ? {...editedTodo, todo} : todo ) )
+    const updatedTodos = todoList.map( (todo) => todo.id === editedTodo.id ? {...editedTodo}:todo );
 
-    SetTodoList(updatedTodos)
+    SetTodoList(updatedTodos);
   }
 
   return (
