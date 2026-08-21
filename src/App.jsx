@@ -11,7 +11,7 @@ const todos = [
 
 function App() {
 
-  const [todoList, SetTodoList] = useState(todos);
+  const [todoList, setTodoList] = useState(todos);
   // const [todoList, SetTodoList] = useState(todos.todoList);
 
 
