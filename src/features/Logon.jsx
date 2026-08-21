@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-export function Logon(onSetEmail, onSetToken) {
+export default function Logon(onSetEmail, onSetToken) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [authError, setauthError] = useState('');
 
     const [isLoggingOn, setisLoggingOn] = useState(false);
+    
 
     async function handleSubmit(event) {
         event.preventDefault();
