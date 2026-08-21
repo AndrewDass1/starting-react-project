@@ -3,7 +3,7 @@ import TodoList from './TodoList/TodoList.jsx';
 import { useEffect, useOptimistic, useState } from 'react';
 
 export function TodosPage({token}) {
-    const [todoList, SetTodoList] = useState([]);
+    const [todoList, setTodoList] = useState([]);
 
     const [error, setError] = useState('');
 
@@ -16,8 +16,8 @@ export function TodosPage({token}) {
             
         const options = {
             method: 'POST',
-            body: JSON.stringify(todo.title, todo.isCompleted),
-            headers: { 'Content-Type': 'application/json, X-CSRF-TOKEN'},
+            body: JSON.stringify({title: todo.title, isCompleted: todo.isCompleted}),
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token},
             credentials: 'include'
         };
         
@@ -28,17 +28,18 @@ export function TodosPage({token}) {
         }
 
 
-        return SetTodoList( todoList =>[...todo, ...todoList]);
+        return setTodoList( todoList =>[...todo, ...todoList]);
     }
 
 
     async function completeTodo(id) {
-        SetTodoList( (getToDoList) => getToDoList.map( (todo) => (todo.id == id) ? {...todo, isCompleted: !todo.isCompleted}  : todo ) )
+        setTodoList( (getToDoList) => getToDoList.map( (todo) => (todo.id == id) ? {...todo, isCompleted: !todo.isCompleted}  : todo ) )
 
         const options = {
             method: 'PATCH',
-            body: JSON.stringify(todo.isCompleted),
-            headers: { 'Content-Type': 'application/json, X-CSRF-TOKEN'},
+            body: JSON.stringify({isCompleted: true}),
+            headers: { 'Content-Type': 'application/json', 
+                'X-CSRF-TOKEN': token},
             credentials: 'include'
         };
 
@@ -52,12 +53,18 @@ export function TodosPage({token}) {
     async function updateTodo(editedTodo){
         const updatedTodos = todoList.map( (todo) => todo.id === editedTodo.id ? {...editedTodo}:todo );
 
-        SetTodoList(updatedTodos);
+        setTodoList(updatedTodos);
+
+        const passToBody = {
+            title: editedTodo.title,
+            isCompleted: true
+        }
 
         const options = {
             method: 'PATCH',
-            body: JSON.stringify(todo.title, todo.isCompleted),
-            headers: { 'Content-Type': 'application/json, X-CSRF-TOKEN'},
+            body: JSON.stringify(passToBody),
+            headers: { 'Content-Type': 'application/json', 
+                'X-CSRF-TOKEN': token},
             credentials: 'include'
         };
 
@@ -68,7 +75,7 @@ export function TodosPage({token}) {
         }
     }
 
-    useEffect( () => {
+    useEffect( (token) => {
         async function fetchTodos() {
             setIsTodoListLoading(true);
 
