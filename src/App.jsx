@@ -10,7 +10,7 @@ function App() {
   function addTodo(todoTitle){
       let todo = [{id: Date.now(), title: todoTitle}]
 
-      return setTodoList( todoList =>[todo, ...todoList]);
+      return setTodoList( todoList =>[...todo, ...todoList]);
   }
 
   return (
