@@ -9,8 +9,6 @@ export function TodosPage({token}) {
 
     const [isTodoListLoading, setIsTodoListLoading] = useState(false);
 
-    console.log(todoList)
-
     async function addTodo(todoTitle){
         let todo = [{id: Date.now(), title: todoTitle, isCompleted: false}];
             
@@ -69,7 +67,7 @@ export function TodosPage({token}) {
         };
 
         try {
-            const response = await fetch(`http://localhost:3001/api/tasks/${editedTodo.id}`, options);
+            const response = await fetch(`/api/tasks/${editedTodo.id}`, options);
         } catch (error) {
             setauthError(`Authentication failed: ${data?.message}`);
         }
@@ -104,10 +102,17 @@ export function TodosPage({token}) {
         }
     }, []);
 
+    if (error) {
+        <Error type="button">Clear Error</Error>
+    }
+
+    isTodoListLoading(true);
 
     return (
         <div>
             <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
+            <Error />
+
             <TodoForm onAddTodo={addTodo} />
         </div>
     )

@@ -12,6 +12,8 @@ export default function Logon(onSetEmail, onSetToken) {
     async function handleSubmit(event) {
         event.preventDefault();
 
+        setisLoggingOn(true);
+
         const options = {
             method: 'POST',
             body: JSON.stringify({email}, {password}),
@@ -20,7 +22,7 @@ export default function Logon(onSetEmail, onSetToken) {
         };
 
         try {
-            const response = await fetch('http://localhost:3001/api/users/logon', options);
+            const response = await fetch('/api/users/logon', options);
             
             // if(!resp.ok){
             //     if(resp.status === 401) {
@@ -37,9 +39,8 @@ export default function Logon(onSetEmail, onSetToken) {
             } else {
                 setauthError(`Authentication failed: ${data?.message}`);
             }
-            setisLoggingOn(true);
-        } catch(error) {
-            setauthError(`Error:, ${error.name} | ${error.message}`);
+        } catch(response) {
+            setauthError(`Error:, ${response.status}`);
         } finally {
             setisLoggingOn(false);
         }

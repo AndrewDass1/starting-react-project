@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Header } from './shared/Header';
+import Header from "./shared/Header.jsx";
 
 import { TodosPage } from './features/Todos/TodosPage';
 
@@ -12,18 +12,18 @@ function App() {
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
 
+  <Header onSetEmail={setEmail} onSetToken={setToken} token={token}/>
 
   if (token) {
     return <div>
-      <Header />
-      <Logon onSetEmail={setEmail} onSetToken={setToken} />
+      
+      <TodosPage token={token} />
     </div>
   }
   else {
     return <div>
-      <Header />
 
-      <TodosPage token={token} />
+      <Logon onSetEmail={setEmail} onSetToken={setToken} />
     </div> 
   }
 
