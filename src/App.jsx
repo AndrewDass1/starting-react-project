@@ -19,22 +19,14 @@ function App() {
       <TodosPage token={token} />
     </div>
   }
-  else {
-    return <div>
-      <Header onSetEmail={setEmail} onSetToken={setToken} token={token}/>
 
-      <Logon onSetEmail={setEmail} onSetToken={setToken} />
-    </div> 
-  }
+  return <div>
+    <Header onSetEmail={setEmail} onSetToken={setToken} token={token}/>
 
-  // return (
-  //   <div>
-  //     <Header />
+    <Logon onSetEmail={setEmail} onSetToken={setToken} />
+  </div> 
+  
 
-  //     <TodosPage />
-  //   </div>
-  // );
-  //       <Header token={token} onSetToken={setToken} onSetEmail={setEmail}/>
 }
 
 export default App;
