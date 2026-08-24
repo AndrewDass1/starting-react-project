@@ -9,6 +9,10 @@ export default function TodosPage({token}) {
 
     const [isTodoListLoading, setIsTodoListLoading] = useState(false);
 
+    const clearError = () => {
+        setError('');
+    }
+
     async function addTodo(todoTitle){
         let todo = [{id: Date.now(), title: todoTitle, isCompleted: false}];
             
@@ -102,16 +106,12 @@ export default function TodosPage({token}) {
         }
     }, []);
 
-    if (error) {
-        <Error type="button">Clear Error</Error>
-    }
-
-    isTodoListLoading(true);
 
     return (
         <div>
             <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
-            <Error />
+            
+            <button onclick={clearError}>Clear Error</button>
 
             <TodoForm onAddTodo={addTodo} />
         </div>
