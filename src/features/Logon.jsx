@@ -47,22 +47,3 @@ export default function Logon(onSetEmail, onSetToken) {
     };
 
 }
-
-
-
-// Create an async handleSubmit function (done) that:
-// uses try/catch/finally blocks (done)
-// Prevents default form submission (done)
-// Sets loading state to true (done)
-
-// Makes a POST request to /api/users/logon with 
-// email and password in the request body (done)
-
-// Includes headers for Content-Type: application/json
-//  and credentials: 'include' (done)
-
-// On successful response (status 200 with name and csrfToken), 
-// calls onSetEmail and onSetToken props: This will be made when we update App.jsx.
-
-// On failure, sets appropriate error message 
-// Finally sets loading state back to false (done)
