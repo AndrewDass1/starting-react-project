@@ -1,8 +1,8 @@
 import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
-import { useEffect, useOptimistic, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function TodosPage({token}) {
+export default function TodosPage({token}) {
     const [todoList, setTodoList] = useState([]);
 
     const [error, setError] = useState('');
