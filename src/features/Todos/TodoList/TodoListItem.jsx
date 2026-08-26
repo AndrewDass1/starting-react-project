@@ -14,15 +14,14 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
         setIsEditing(false);
     }
 
-    // fix needed
     function handleEdit(event) {
         setWorkingTitle(event.target.value);
     }
 
     // Fix handleUpdate - needs validation helper
     function handleUpdate(event) {
-        if(!isEditing) return;
         event.preventDefault();
+        if(!isEditing) return;
 
         if(!isValidTodoTitle(workingTitle)) return;
 
