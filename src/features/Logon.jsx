@@ -54,7 +54,7 @@ export default function Logon({onSetEmail, onSetToken}) {
             </div>
 
             <button type="submit" value="submit" disabled={isLoggingOn} form="form1">
-                {isLoggingOn ? 'Logging in…' : 'Submit'}
+                {isLoggingOn ? 'Logging in…' : 'Logging in'}
             </button>
         </form>
     </div>

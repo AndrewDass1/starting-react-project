@@ -1,43 +1,59 @@
-import { useRef } from 'react';
-
 import { useState } from 'react';
 
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
 
-function TodoForm({ onAddTodo }) {
-  const inputRef = useRef();
+function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
+    const [isEditing, setIsEditing] = useState(false);
 
-  const [workingTodoTitle, setWorkingTodoTitle] = useState('');
+    const [workingTitle, setWorkingTitle] = useState(todo.title);
 
-  const handleAddTodo = (event) => {
-    event.preventDefault();
-
-    if (workingTodoTitle && isValidTodoTitle(workingTodoTitle)) {
-      onAddTodo(workingTodoTitle);
-      setWorkingTodoTitle('');
-      inputRef.current.focus();
+    function handleCancel() {
+        setWorkingTitle(todo.title);
+        setIsEditing(false);
     }
-  };
 
-  return (
-    <form onSubmit={handleAddTodo}>
-      <TextInputWithLabel
-        ref={inputRef}
-        value={workingTodoTitle} 
-        onChange={(event)=>setWorkingTodoTitle(event.target.value)}
-        elementId="todoTitle"
-        labelText="Todo"
-      >      
+    function handleEdit(event) {
+        setWorkingTitle(event.target.value);
+    }
 
-      </TextInputWithLabel>
-      
-      <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)}>
-        Add Todo
-      </button>
-    </form>
-  );
+    // Fix handleUpdate - needs validation helper
+    function handleUpdate(event) {
+        event.preventDefault();
+        if(!isEditing) return;
+
+        if(!isValidTodoTitle(workingTitle)) return;
+
+        onUpdateTodo({...todo, title: workingTitle});
+        setIsEditing(false);
+    }
+
+    return (
+        <li>
+            <form onSubmit={handleUpdate}>
+                {isEditing ? (
+                    <>
+                        <TextInputWithLabel value={workingTitle} elementId={`todo-${todo.id}`} labelText="Todo" onChange={handleEdit}/>
+                        <button type="button" onClick={handleCancel}> Cancel </button>
+                        <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)}> Update </button>
+                    </>
+                ) : (
+                    <>
+                        <label>
+                            <input
+                                type="checkbox"
+                                id={`checkbox${todo.id}`}
+                                checked={todo.isCompleted}
+                                onChange={() => onCompleteTodo(todo.id)}
+                            />
+                        </label>
+                        <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+                    </>
+                )}
+            </form>
+        </li>
+    )
 }
 
-export default TodoForm;
+export default TodoListItem;
