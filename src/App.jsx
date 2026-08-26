@@ -12,24 +12,20 @@ function App() {
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
 
-  const handleClearToken = () => {
-    setToken('');
-    setEmail('');
-  }
-
-  
+  if (token) {
     return <div>
       <Header onSetEmail={setEmail} onSetToken={setToken} token={token}/>
-
-      {token && (
-        <TodosPage token={token} onClearToken={handleClearToken}/>
-      )}
-
-      {!token && (
-        <Logon onSetEmail={setEmail} onSetToken={setToken} />
-      )}
       
-    </div>  
+      <TodosPage token={token} />
+    </div>
+  }
+
+  return <div>
+    <Header onSetEmail={setEmail} onSetToken={setToken} token={token}/>
+
+    <Logon onSetEmail={setEmail} onSetToken={setToken} />
+  </div> 
+  
 
 }
 
