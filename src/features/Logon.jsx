@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
-export default function Logon({onSetEmail, onSetToken}) {
+export default function Logon(onSetEmail, onSetToken) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [authError, setAuthError] = useState('');
+    const [authError, setauthError] = useState('');
 
-    const [isLoggingOn, setIsLoggingOn] = useState(false);
+    const [isLoggingOn, setisLoggingOn] = useState(false);
     
 
     async function handleSubmit(event) {
         event.preventDefault();
-        setIsLoggingOn(true);
-        setAuthError('');
+
+        setisLoggingOn(true);
 
         const options = {
             method: 'POST',
@@ -23,6 +23,13 @@ export default function Logon({onSetEmail, onSetToken}) {
 
         try {
             const response = await fetch('/api/users/logon', options);
+            
+            // if(!resp.ok){
+            //     if(resp.status === 401) {
+            //         console.dir(resp);
+            //     }
+            //     throw new Error(resp.status);
+            // }
 
             const data = await response.json();
 
@@ -30,47 +37,14 @@ export default function Logon({onSetEmail, onSetToken}) {
                 onSetEmail(data.name);
                 onSetToken(data.csrfToken);
             } else {
-                setAuthError(`Authentication failed: ${data?.message} || Error occurred`);
+                setauthError(`Authentication failed: ${data?.message}`);
             }
-        } catch(error) {
-            setAuthError(`Error:, ${error.message}`);
+        } catch(response) {
+            setauthError(`Error:, ${response.status}`);
         } finally {
-            setIsLoggingOn(false);
+            setisLoggingOn(false);
         }
-        
     };
 
-    return (
-    <form onSubmit={handleSubmit}>
-      {isLoggingOn && <p>Logging in…</p>}
-      {authError && <p className="error">{authError}</p>}
-
-      <div>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email} // controlled input
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password} // controlled input
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <button type="submit" disabled={isLoggingOn}>
-        Log on
-      </button>
-    </form>
-  );
 }
 
