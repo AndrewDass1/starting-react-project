@@ -2,7 +2,7 @@ import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
 import { useEffect, useState } from 'react';
 
-export default function TodosPage({token}) {
+export default function TodosPage({token, onClearToken}) {
     const [todoList, setTodoList] = useState([]);
 
     const [error, setError] = useState('');
@@ -15,27 +15,38 @@ export default function TodosPage({token}) {
 
     async function addTodo(todoTitle){
         let todo = [{id: Date.now(), title: todoTitle, isCompleted: false}];
-            
+        
+        const previous = todoList;
+
+        const optState = [...todoList, todo];
+        setTodoList(optState);
+
         const options = {
             method: 'POST',
-            body: JSON.stringify({title: todo.title, isCompleted: todo.isCompleted}),
+            body: JSON.stringify({title: todoTitle, isCompleted: false}),
             headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token},
             credentials: 'include'
         };
         
         try {
-            const response = await fetch(`http://localhost:3001/api/tasks`, options);
+            const response = await fetch(`/api/tasks`, options);
+
+            const getResponse = await response.json();
+
+            setTodoList([...previous, getResponse]);
         } catch (error) {
-            setauthError(`Authentication failed: ${data?.message}`);
+            setError(error.message);
+            setTodoList(previous);
         }
-
-
-        return setTodoList( todoList =>[...todo, ...todoList]);
     }
 
 
     async function completeTodo(id) {
-        setTodoList( (getToDoList) => getToDoList.map( (todo) => (todo.id == id) ? {...todo, isCompleted: !todo.isCompleted}  : todo ) )
+        const previous = todoList;
+
+        const optState = previous.map((todo) => todo.id === id ? {...todo, isCompleted: !todo.isCompleted} : todo)
+
+        setTodoList(optState);
 
         const options = {
             method: 'PATCH',
@@ -46,16 +57,27 @@ export default function TodosPage({token}) {
         };
 
         try {
-            const response = await fetch(`http://localhost:3001/api/tasks/${id}`, options);
+            const response = await fetch(`/api/tasks/${id}`, options);
+
+            if (!response.ok) {
+                throw new Error('Error')
+            }
+
+            const getResponse = await response.json();
+
+            setTodoList(previous.map((todo) => (todo.id === id ? updated : todo)))
+
         } catch (error) {
-            setauthError(`Authentication failed: ${data?.message}`);
+            setError(error.message);
+            setTodoList(previous);
         }
     }
 
     async function updateTodo(editedTodo){
-        const updatedTodos = todoList.map( (todo) => todo.id === editedTodo.id ? {...editedTodo}:todo );
+        const previous = todoList;
 
-        setTodoList(updatedTodos);
+        const optState = previous.map((todo) => todo.id === editedTodo.id ? { ...editedTodo } : todo);
+        setTodoList(optState);
 
         const passToBody = {
             title: editedTodo.title,
@@ -72,14 +94,28 @@ export default function TodosPage({token}) {
 
         try {
             const response = await fetch(`/api/tasks/${editedTodo.id}`, options);
+
+            if(!response.ok) {
+                throw new Error("Error");
+            }
+
+            const getResponse = await response.json();
+
+            const updatedTodos = previous.map( (todo) => todo.id === editedTodo.id ? getResponse:todo );
+            setTodoList(updatedTodos);
+
         } catch (error) {
-            setauthError(`Authentication failed: ${data?.message}`);
+            setError(error.message);
+            setTodoList(previous);
         }
     }
 
-    useEffect( (token) => {
+    useEffect( () => {
+        if(!token) return;
+
         async function fetchTodos() {
             setIsTodoListLoading(true);
+            setError('');
 
             try {
                 const params = new URLSearchParams({
@@ -91,28 +127,44 @@ export default function TodosPage({token}) {
                         },
                     credentials: 'include',
                 });
+
+                if (response.status === 401) {
+                    onClearToken?.();
+                    setError("Error");
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error('Error');
+                }
+
+                const getResponse = await response.json();
+
+                setTodoList(getResponse);
             }
             catch (error) {
-                if (error === 401) {
-                    setError('unauthorized')
-                }
-                else {
-                    setError(`Error:, ${error.name} | ${error.message}`);
-                }
+                setError(`Error:, ${error.name} | ${error.message}`);
             }
             finally {
                 setIsTodoListLoading(false);
             }
         }
-    }, []);
+
+        fetchTodos();
+    }, [token, onClearToken]);
 
 
     return (
         <div>
+            {isTodoListLoading && <p>Loading todos...</p>}
+            {error && (
+                <div> 
+                    <p className="error">{error}</p>
+                    <button onClick={clearError}>Clear Error</button>
+                </div>
+            )}
             <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
             
-            <button onclick={clearError}>Clear Error</button>
-
             <TodoForm onAddTodo={addTodo} />
         </div>
     )
