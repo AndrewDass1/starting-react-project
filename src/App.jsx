@@ -12,14 +12,12 @@ function App() {
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
 
-  return <div>
+  return (<div>
       <Header onSetEmail={setEmail} onSetToken={setToken} token={token}/>
 
-      {token && <TodosPage token={token} />}
+      {(token) ? <TodosPage token={token} /> : <Logon onSetEmail={setEmail} onSetToken={setToken} />}
 
-      {!token && <Logon onSetEmail={setEmail} onSetToken={setToken} />}
-
-  </div>
+  </div>)
   
 
 }
