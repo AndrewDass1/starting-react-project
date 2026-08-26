@@ -24,7 +24,7 @@ export default function TodosPage({token}) {
         };
         
         try {
-            const response = await fetch(`http://localhost:3001/api/tasks`, options);
+            const response = await fetch(`/api/tasks`, options);
         } catch (error) {
             setauthError(`Authentication failed: ${data?.message}`);
         }
@@ -46,7 +46,7 @@ export default function TodosPage({token}) {
         };
 
         try {
-            const response = await fetch(`http://localhost:3001/api/tasks/${id}`, options);
+            const response = await fetch(`/api/tasks/${id}`, options);
         } catch (error) {
             setauthError(`Authentication failed: ${data?.message}`);
         }
@@ -111,7 +111,7 @@ export default function TodosPage({token}) {
         <div>
             <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>
             
-            <button onclick={clearError}>Clear Error</button>
+            <button onClick={clearError}>Clear Error</button>
 
             <TodoForm onAddTodo={addTodo} />
         </div>
