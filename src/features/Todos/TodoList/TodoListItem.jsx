@@ -25,7 +25,7 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
 
         if(!isValidTodoTitle(workingTitle)) return;
 
-        onUpdateTodo({...todo, title: workingTitle});
+        onUpdateTodo(todo.id, workingTitle);
         setIsEditing(false);
     }
 
