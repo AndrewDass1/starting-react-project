@@ -34,8 +34,8 @@ export default function TodosPage({ token }) {
 
         const getResponse = await response.json();
         setTodoList(getResponse.tasks || []);
-      } catch (error) {
-        setError(error.message);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setIsTodoListLoading(false);
       }
@@ -45,38 +45,50 @@ export default function TodosPage({ token }) {
   }, [token]);
 
   async function addTodo(todoTitle) {
+    const idDate = Date.now();
+
     const newTodo = {
-      id: Date.now(),
+      id: idDate,
       title: todoTitle,
       isCompleted: false,
     };
 
-    setTodoList((prev) => [newTodo, ...prev]);
+    const previousList = todoList;
+
+    setTodoList([newTodo, ...todoList]);
 
     try {
-      await fetch(`/api/tasks`, {
+      const response = await fetch(`/api/tasks`, {
         method: 'POST',
-        body: JSON.stringify(newTodo),
+        body: JSON.stringify({ title: todoTitle, isCompleted: false }),
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': token,
         },
         credentials: 'include',
       });
+
+      if (!response.ok) {
+        throw new Error('Error. No todo was found to add.');
+      }
+
+      const getTodo = await response.json();
+
+      setTodoList((previous) => previous.map((temporary) => (temporary.id === idDate ? getTodo : temporary)));
+
     } catch (error) {
       setError(error.message);
+      setTodoList(previousList);
     }
   }
 
   async function completeTodo(id) {
-    setTodoList((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
-      )
-    );
+    const originalTodo = todoList.find((temporary) => temporary.id === id);
+
+    setTodoList((previous) => previous.map((temporary) => temporary.id === id ? { ...temporary, isCompleted: true } : temporary));
 
     try {
-      await fetch(`/api/tasks/${id}`, {
+      const response = await fetch(`/api/tasks/${id}`, {
         method: 'PATCH',
         body: JSON.stringify({ isCompleted: true }),
         headers: {
@@ -85,24 +97,41 @@ export default function TodosPage({ token }) {
         },
         credentials: 'include',
       });
+
+      if (!response.ok) {
+        throw new Error('Error. No todo was found to complete.');
+      }
+
+      const getTodo = await response.json();
+
+      setTodoList((previous) => previous.map((temporary) => (temporary.id === id ? getTodo : temporary)));
+
     } catch (error) {
       setError(error.message);
+
+      setTodoList((previous) => previous.map((temporary) => temporary.id === id ? originalTodo : temporary));
     }
   }
 
-  async function updateTodo(editedTodo) {
-    setTodoList((prev) =>
-      prev.map((todo) =>
-        todo.id === editedTodo.id ? { ...editedTodo } : todo
-      )
-    );
+  async function updateTodo(id, newTitle) {
+    const originalTodo = todoList.find((temporary) => temporary.id === id);
+
+    if (!originalTodo) {
+      setError("Error. Todo was not found.");
+      return;
+    }
+
+    const newTodo = {...originalTodo, title: newTitle};
+
+    setTodoList((previous) =>
+      previous.map((temporary) => temporary.id === id ? newTodo : temporary));
 
     try {
-      await fetch(`/api/tasks/${editedTodo.id}`, {
+      const response = await fetch(`/api/tasks/${id}`, {
         method: 'PATCH',
         body: JSON.stringify({
-          title: editedTodo.title,
-          isCompleted: editedTodo.isCompleted,
+          title: newTitle,
+          isCompleted: originalTodo.isCompleted,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -110,25 +139,38 @@ export default function TodosPage({ token }) {
         },
         credentials: 'include',
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to update todo.');
+      }
+
+      const updatedTodo = await response.json();
+
+      setTodoList((previous) =>
+        previous.map((temporary) => temporary.id === id ? updatedTodo : temporary));
+
     } catch (error) {
       setError(error.message);
+
+      setTodoList((previous) => previous.map((temporary) => temporary.id === id ? originalTodo : temporary));
     }
   }
 
   return (
     <div>
-    {isTodoListLoading && (
-      <div>
-        Loading todos...
-      </div>
-    )}
 
-    {error && (
-      <div>
-        <p>{error}</p>
-        <button onClick={() => setError('')}>Clear Error</button>
-      </div>
-    )}
+      {error && (
+        <div>
+          <p>{error}</p>
+          <button onClick={() => setError('')}>Clear Error</button>
+        </div>
+      )}
+
+      {isTodoListLoading && (
+        <div>
+          Loading todos...
+        </div>
+      )}
 
       <TodoForm onAddTodo={addTodo} />
 
