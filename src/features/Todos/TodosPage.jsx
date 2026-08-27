@@ -1,3 +1,4 @@
+
 import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
 import { useEffect, useState } from 'react';
@@ -60,7 +61,11 @@ export default function TodosPage({ token }) {
     try {
       const response = await fetch(`/api/tasks`, {
         method: 'POST',
+<<<<<<< HEAD
         body: JSON.stringify({ title: todoTitle, isCompleted: false }),
+=======
+        body: JSON.stringify({ title: todoTitle }),
+>>>>>>> 48a941b8bd4888d03d771c2b3f1ad4ebbc7eba6c
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': token,
@@ -158,6 +163,14 @@ export default function TodosPage({ token }) {
 
   return (
     <div>
+<<<<<<< HEAD
+=======
+      {isTodoListLoading && (
+        <div>
+          Loading todos...
+        </div>
+      )}
+>>>>>>> 48a941b8bd4888d03d771c2b3f1ad4ebbc7eba6c
 
       {error && (
         <div>
@@ -165,12 +178,15 @@ export default function TodosPage({ token }) {
           <button onClick={() => setError('')}>Clear Error</button>
         </div>
       )}
+<<<<<<< HEAD
 
       {isTodoListLoading && (
         <div>
           Loading todos...
         </div>
       )}
+=======
+>>>>>>> 48a941b8bd4888d03d771c2b3f1ad4ebbc7eba6c
 
       <TodoForm onAddTodo={addTodo} />
 
