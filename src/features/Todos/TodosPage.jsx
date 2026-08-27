@@ -61,7 +61,7 @@ export default function TodosPage({ token }) {
     try {
       const response = await fetch(`/api/tasks`, {
         method: 'POST',
-        body: JSON.stringify({ title: todoTitle }),
+        body: JSON.stringify({ title: todoTitle, isCompleted: false }),
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': token,
@@ -159,16 +159,17 @@ export default function TodosPage({ token }) {
 
   return (
     <div>
-      {isTodoListLoading && (
-        <div>
-          Loading todos...
-        </div>
-      )}
 
       {error && (
         <div>
           <p>{error}</p>
           <button onClick={() => setError('')}>Clear Error</button>
+        </div>
+      )}
+
+      {isTodoListLoading && (
+        <div>
+          Loading todos...
         </div>
       )}
 
