@@ -2,10 +2,15 @@ import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
 import { useEffect, useState } from 'react';
 
+import SortBy from '../../shared/SortBy.jsx';
+
 export default function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState('');
   const [isTodoListLoading, setIsTodoListLoading] = useState(false);
+
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [sortDirection, setSortDirection] = useState('desc');
 
   function getRequestError(response, action) {
     if (response.status === 401 || response.status === 403) {
@@ -23,7 +28,7 @@ export default function TodosPage({ token }) {
       setError('');
 
       try {
-        const params = new URLSearchParams({ limit: 100 });
+        const params = new URLSearchParams({ sortBy, sortDirection, limit: 100 });
 
         const response = await fetch(`/api/tasks?${params}`, {
           headers: {
@@ -46,7 +51,7 @@ export default function TodosPage({ token }) {
     }
 
     fetchTodos();
-  }, [token]);
+  }, [token, sortBy, sortDirection]);
 
   async function addTodo(todoTitle) {
     const idDate = Date.now();
@@ -178,6 +183,8 @@ export default function TodosPage({ token }) {
           Loading todos...
         </div>
       )}
+
+      <SortBy sortBy={sortBy} sortDirection={sortDirection} onSortByChange={setSortBy} onSortDirectionChange={setSortDirection}/>
 
       <TodoForm onAddTodo={addTodo} />
 
