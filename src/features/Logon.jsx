@@ -33,17 +33,14 @@ export default function Logon({onSetEmail, onSetToken}) {
                 setAuthError(`Authentication failed: ${data?.message}`);
             }
         } catch(error) {
-            setAuthError(`Error: ${error.message}`);
+            setAuthError(`${error.name}: ${error.message}`);
         } finally {
             setIsLoggingOn(false);
         }
     };
 
     return <div>
-
-        { authError && <div> 
-            {setAuthError("Error occurred.")}
-        </div>}
+        {authError && <div role="alert">{authError}</div>}
 
         <form onSubmit={handleSubmit} id="form1">
             <div>
@@ -58,7 +55,7 @@ export default function Logon({onSetEmail, onSetToken}) {
             </div>
 
             <button type="submit" value="submit" disabled={isLoggingOn} form="form1">
-                {isLoggingOn ? 'Logging in…' : 'Log in'}
+                {isLoggingOn ? 'Logging in...' : 'Log On'}
             </button>
         </form>
     </div>
