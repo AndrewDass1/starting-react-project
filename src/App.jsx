@@ -13,7 +13,7 @@ function App() {
   const [token, setToken] = useState('');
 
   return (<div>
-      <Header onSetEmail={setEmail} onSetToken={setToken} token={token}/>
+      <Header token={token} onSetToken={setToken} onSetEmail={setEmail} />
 
       {(token) ? <TodosPage token={token} /> : <Logon onSetEmail={setEmail} onSetToken={setToken} />}
 

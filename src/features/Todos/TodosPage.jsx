@@ -1,4 +1,3 @@
-
 import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
 import { useEffect, useState } from 'react';
@@ -7,6 +6,14 @@ export default function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState('');
   const [isTodoListLoading, setIsTodoListLoading] = useState(false);
+
+  function getRequestError(response, action) {
+    if (response.status === 401 || response.status === 403) {
+      return new Error('Unauthorized. Please log in again.');
+    }
+
+    return new Error(`Unable to ${action}. Please try again.`);
+  }
 
   useEffect(() => {
     if (!token) return;
@@ -25,12 +32,8 @@ export default function TodosPage({ token }) {
           credentials: 'include',
         });
 
-        if (response.status === 401) {
-          throw new Error('Unauthorized, please log in again.');
-        }
-
         if (!response.ok) {
-          throw new Error('Failed to fetch todos.');
+          throw getRequestError(response, 'load todos');
         }
 
         const getResponse = await response.json();
@@ -54,18 +57,13 @@ export default function TodosPage({ token }) {
       isCompleted: false,
     };
 
-    const previousList = todoList;
-
-    setTodoList([newTodo, ...todoList]);
+    setError('');
+    setTodoList((previous) => [newTodo, ...previous]);
 
     try {
       const response = await fetch(`/api/tasks`, {
         method: 'POST',
-<<<<<<< HEAD
         body: JSON.stringify({ title: todoTitle, isCompleted: false }),
-=======
-        body: JSON.stringify({ title: todoTitle }),
->>>>>>> 48a941b8bd4888d03d771c2b3f1ad4ebbc7eba6c
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': token,
@@ -74,7 +72,7 @@ export default function TodosPage({ token }) {
       });
 
       if (!response.ok) {
-        throw new Error('Error. No todo was found to add.');
+        throw getRequestError(response, 'add this todo');
       }
 
       const getTodo = await response.json();
@@ -83,13 +81,14 @@ export default function TodosPage({ token }) {
 
     } catch (error) {
       setError(error.message);
-      setTodoList(previousList);
+      setTodoList((previous) => previous.filter((todo) => todo.id !== idDate));
     }
   }
 
   async function completeTodo(id) {
     const originalTodo = todoList.find((temporary) => temporary.id === id);
 
+    setError('');
     setTodoList((previous) => previous.map((temporary) => temporary.id === id ? { ...temporary, isCompleted: true } : temporary));
 
     try {
@@ -104,7 +103,7 @@ export default function TodosPage({ token }) {
       });
 
       if (!response.ok) {
-        throw new Error('Error. No todo was found to complete.');
+        throw getRequestError(response, 'complete this todo');
       }
 
       const getTodo = await response.json();
@@ -128,6 +127,7 @@ export default function TodosPage({ token }) {
 
     const newTodo = {...originalTodo, title: newTitle};
 
+    setError('');
     setTodoList((previous) =>
       previous.map((temporary) => temporary.id === id ? newTodo : temporary));
 
@@ -146,7 +146,7 @@ export default function TodosPage({ token }) {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update todo.');
+        throw getRequestError(response, 'update this todo');
       }
 
       const updatedTodo = await response.json();
@@ -163,30 +163,22 @@ export default function TodosPage({ token }) {
 
   return (
     <div>
-<<<<<<< HEAD
-=======
-      {isTodoListLoading && (
-        <div>
-          Loading todos...
-        </div>
-      )}
->>>>>>> 48a941b8bd4888d03d771c2b3f1ad4ebbc7eba6c
 
       {error && (
-        <div>
-          <p>{error}</p>
-          <button onClick={() => setError('')}>Clear Error</button>
-        </div>
+        <>
+          <div role="alert" aria-live="polite">
+            <p>API error: {error}</p>
+            <button type="button" onClick={() => setError('')}>Clear Error</button>
+          </div>
+        </>
       )}
-<<<<<<< HEAD
+
 
       {isTodoListLoading && (
         <div>
           Loading todos...
         </div>
       )}
-=======
->>>>>>> 48a941b8bd4888d03d771c2b3f1ad4ebbc7eba6c
 
       <TodoForm onAddTodo={addTodo} />
 

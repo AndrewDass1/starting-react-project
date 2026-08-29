@@ -18,7 +18,6 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
         setWorkingTitle(event.target.value);
     }
 
-    // Fix handleUpdate - needs validation helper
     function handleUpdate(event) {
         event.preventDefault();
         if(!isEditing) return;
@@ -36,7 +35,7 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
                     <>
                         <TextInputWithLabel value={workingTitle} elementId={`todo-${todo.id}`} labelText="Todo" onChange={handleEdit}/>
                         <button type="button" onClick={handleCancel}> Cancel </button>
-                        <button type="button" onClick={handleUpdate} disabled={!isValidTodoTitle(workingTitle)}> Update </button>
+                        <button type="submit" disabled={!isValidTodoTitle(workingTitle)}> Update </button>
                     </>
                 ) : (
                     <>
