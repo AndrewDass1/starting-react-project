@@ -173,7 +173,6 @@ export default function TodosPage({ token }) {
         </>
       )}
 
-
       {isTodoListLoading && (
         <div>
           Loading todos...
