@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 
 import SortBy from '../../shared/SortBy.jsx';
 
+import useDebounce from '../../utils/useDebounce.js'; 
+import FilterInput from '../../shared/FilterInput.jsx';
+
 export default function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState('');
@@ -11,6 +14,10 @@ export default function TodosPage({ token }) {
 
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortDirection, setSortDirection] = useState('desc');
+
+  const [filterTerm, setFilterTerm] = useState('');
+  const debouncedFilterTerm = useDebounce(filterTerm, 300);
+
 
   function getRequestError(response, action) {
     if (response.status === 401 || response.status === 403) {
@@ -20,6 +27,8 @@ export default function TodosPage({ token }) {
     return new Error(`Unable to ${action}. Please try again.`);
   }
 
+  const handleFilterChange = (newTerm) => {setFilterTerm(newTerm);};
+
   useEffect(() => {
     if (!token) return;
 
@@ -28,7 +37,16 @@ export default function TodosPage({ token }) {
       setError('');
 
       try {
-        const params = new URLSearchParams({ sortBy, sortDirection, limit: 100 });
+        const paramsObject = {
+          sortBy,
+          sortDirection,
+          limit: 100
+        };
+        if (debouncedFilterTerm) {
+          paramsObject.find = debouncedFilterTerm;
+        }
+
+        const params = new URLSearchParams({ paramsObject });
 
         const response = await fetch(`/api/tasks?${params}`, {
           headers: {
@@ -51,7 +69,7 @@ export default function TodosPage({ token }) {
     }
 
     fetchTodos();
-  }, [token, sortBy, sortDirection]);
+  }, [token, sortBy, sortDirection, debouncedFilterTerm]);
 
   async function addTodo(todoTitle) {
     const idDate = Date.now();
@@ -185,6 +203,8 @@ export default function TodosPage({ token }) {
       )}
 
       <SortBy sortBy={sortBy} sortDirection={sortDirection} onSortByChange={setSortBy} onSortDirectionChange={setSortDirection}/>
+
+      <FilterInput filterTerm={filterTerm} handleFilterChange={handleFilterChange}/>
 
       <TodoForm onAddTodo={addTodo} />
 
