@@ -1,6 +1,6 @@
 import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import SortBy from '../../shared/SortBy.jsx';
 
@@ -17,6 +17,26 @@ export default function TodosPage({ token }) {
 
   const [filterTerm, setFilterTerm] = useState('');
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
+
+  const [dataVersion, setDataVersion] = useState(0);
+
+  const [filterError, setFilterError] = useState('');
+
+  function reset(){
+    setFilterTerm('');
+    setSortBy('createdBy');
+    setSortDirection('desc');
+    setFilterError('');
+  }
+
+  function invalidateCache() {
+    const [dataVersion, setDataVersion] = useState(0);
+
+    const handleIncrement = useCallback(() => {
+      setCount((prev) => prev + 1);
+      console.log("Invalidating memo cache after todo mutation")
+    }, [])
+  }
 
 
   function getRequestError(response, action) {
@@ -61,9 +81,14 @@ export default function TodosPage({ token }) {
 
         const getResponse = await response.json();
         setTodoList(getResponse.tasks || []);
-      } catch (err) {
-        setError(err.message);
-      } finally {
+        setFilterError('');
+      } catch (error) {
+      if (debouncedFilterTerm || sortBy !== 'createdAt' || sortDirection !== 'desc') {
+        setFilterError(`Error filtering/sorting todos: ${error.message}`);
+      } else {
+        setError(`Error fetching todos: ${error.message}`);
+      }
+    } finally {
         setIsTodoListLoading(false);
       }
     }
@@ -101,6 +126,7 @@ export default function TodosPage({ token }) {
       const getTodo = await response.json();
 
       setTodoList((previous) => previous.map((temporary) => (temporary.id === idDate ? getTodo : temporary)));
+      invalidateCache();
 
     } catch (error) {
       setError(error.message);
@@ -132,6 +158,7 @@ export default function TodosPage({ token }) {
       const getTodo = await response.json();
 
       setTodoList((previous) => previous.map((temporary) => (temporary.id === id ? getTodo : temporary)));
+      invalidateCache();
 
     } catch (error) {
       setError(error.message);
@@ -176,6 +203,7 @@ export default function TodosPage({ token }) {
 
       setTodoList((previous) =>
         previous.map((temporary) => temporary.id === id ? updatedTodo : temporary));
+      invalidateCache();
 
     } catch (error) {
       setError(error.message);
@@ -196,6 +224,16 @@ export default function TodosPage({ token }) {
         </>
       )}
 
+      {filterError && (
+        <div> 
+          <p>Error: {filterError}</p>
+
+          <button onClick={setFilterError('')}>"Clear Filter Error"</button>
+          <button onClick={reset()}>Reset Filters</button>
+        </div>
+        )
+      }
+
       {isTodoListLoading && (
         <div>
           Loading todos...
@@ -212,6 +250,7 @@ export default function TodosPage({ token }) {
         todoList={todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        dataVersion={dataVersion}
       />
 
     </div>
