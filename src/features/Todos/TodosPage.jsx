@@ -227,8 +227,8 @@ export default function TodosPage({ token }) {
         <div> 
           <p>Error: {filterError}</p>
 
-          <button onClick={() => setFilterError('')}>"Clear Filter Error"</button>
-          <button onClick={reset}>Reset Filters</button>
+          <button type="button" onClick={() => setFilterError('')}>Clear Filter Error</button>
+          <button type="button" onClick={reset}>Reset Filters</button>
         </div>
         )
       }
