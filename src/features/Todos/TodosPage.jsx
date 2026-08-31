@@ -28,6 +28,7 @@ export default function TodosPage({ token }) {
     setSortBy('createdAt');
     setSortDirection('desc');
     setFilterError('');
+    invalidateCache();
   }
 
   const invalidateCache = useCallback(() => {
