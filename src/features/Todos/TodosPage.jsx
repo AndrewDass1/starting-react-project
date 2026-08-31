@@ -24,7 +24,7 @@ export default function TodosPage({ token }) {
 
   function reset(){
     setFilterTerm('');
-    setSortBy('createdBy');
+    setSortBy('createdAt');
     setSortDirection('desc');
     setFilterError('');
   }
@@ -33,7 +33,7 @@ export default function TodosPage({ token }) {
     const [dataVersion, setDataVersion] = useState(0);
 
     const handleIncrement = useCallback(() => {
-      setCount((prev) => prev + 1);
+      setDataVersion((prev) => prev + 1);
       console.log("Invalidating memo cache after todo mutation")
     }, [])
   }
@@ -66,7 +66,7 @@ export default function TodosPage({ token }) {
           paramsObject.find = debouncedFilterTerm;
         }
 
-        const params = new URLSearchParams({ paramsObject });
+        const params = new URLSearchParams({ sortBy, sortDirection, limit: 100 });
 
         const response = await fetch(`/api/tasks?${params}`, {
           headers: {
@@ -228,8 +228,8 @@ export default function TodosPage({ token }) {
         <div> 
           <p>Error: {filterError}</p>
 
-          <button onClick={setFilterError('')}>"Clear Filter Error"</button>
-          <button onClick={reset()}>Reset Filters</button>
+          <button onClick={handleFilterChange}>"Clear Filter Error"</button>
+          <button onClick={handleIncrement}>Reset Filters</button>
         </div>
         )
       }
@@ -242,7 +242,7 @@ export default function TodosPage({ token }) {
 
       <SortBy sortBy={sortBy} sortDirection={sortDirection} onSortByChange={setSortBy} onSortDirectionChange={setSortDirection}/>
 
-      <FilterInput filterTerm={filterTerm} handleFilterChange={handleFilterChange}/>
+      <FilterInput filterTerm={filterTerm} onFilterChange={onFilterChange}/>
 
       <TodoForm onAddTodo={addTodo} />
 
