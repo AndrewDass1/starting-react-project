@@ -22,9 +22,6 @@ export default function TodosPage({ token }) {
 
   const [filterError, setFilterError] = useState('');
 
-  const handleIncrement = useCallback(() => {
-      setDataVersion((prev) => prev + 1);
-    }, [])
 
   function reset(){
     setFilterTerm('');
@@ -33,8 +30,12 @@ export default function TodosPage({ token }) {
     setFilterError('');
   }
 
-  function invalidateCache() {
-    handleIncrement();
+  function invalidateCache()
+  { 
+    useCallback(() => {
+      setDataVersion((prev) => prev + 1);
+      console.log("Invalidating memo cache after todo mutation");
+    },  [])
   }
 
 
