@@ -9,9 +9,7 @@ export default function FilterInput({filterTerm, onFilterChange}) {
                 value={filterTerm}
                 onChange={event => onFilterChange(event.target.value)}
                 placeholder='Search by title...'     
-            >  
-                    
-            </input>
+            /> 
         </div>
     )
 }
