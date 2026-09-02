@@ -9,11 +9,12 @@ function TodoListItem({todo, onCompleteTodo, onUpdateTodo}) {
 
     const [workingTitle, setWorkingTitle] = useState(todo.title);
 
-    function handleCancel() {
-        useEffect(() => {
+    useEffect(() => {
          setWorkingTitle(todo.title);
        }, [todo.title]);
-       
+
+    function handleCancel() {
+        setWorkingTitle(todo.title);
         setIsEditing(false);
     }
 
