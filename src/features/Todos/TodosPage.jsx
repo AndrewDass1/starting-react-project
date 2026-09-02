@@ -90,7 +90,7 @@ export default function TodosPage({ token }) {
     }
 
     fetchTodos();
-  }, [token, sortBy, sortDirection, debouncedFilterTerm]); // MENTOR: add dataVersion here IF the point is to refetch.
+  }, [token, sortBy, sortDirection, debouncedFilterTerm]); 
 
   async function addTodo(todoTitle) {
     const idDate = Date.now();
