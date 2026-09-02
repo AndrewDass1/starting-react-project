@@ -213,7 +213,7 @@ export default function TodosPage({ token }) {
 
       {error && (
         <>
-          <div role="alert" aria-live="polite">
+          <div>
             <p>API error: {error}</p>
             <button type="button" onClick={() => setError('')}>Clear Error</button>
           </div>
@@ -222,7 +222,7 @@ export default function TodosPage({ token }) {
 
       {filterError && (
         <div> 
-          <p>Error: {filterError}</p>
+          <p>Filter error: {filterError}</p>
 
           <button type="button" onClick={() => setFilterError('')}>Clear Filter Error</button>
           <button type="button" onClick={reset}>Reset Filters</button>
