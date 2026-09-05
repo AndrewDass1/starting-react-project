@@ -1,18 +1,14 @@
 // shared/Header.jsx
 import { useAuth } from '../contexts/AuthContext.jsx';
+import Logoff from '../features/Logoff.jsx';
 
 export default function Header() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div>
       <h1>Todo List</h1>
-
-      {isAuthenticated && (
-        <button type="button" onClick={logout}>
-          Logout
-        </button>
-      )}
+      {isAuthenticated && <Logoff />}
     </div>
   );
 }
