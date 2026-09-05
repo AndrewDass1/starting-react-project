@@ -5,9 +5,9 @@ import TodoList from './TodoList/TodoList.jsx';
 import SortBy from '../../shared/SortBy.jsx';
 import FilterInput from '../../shared/FilterInput.jsx';
 
-import useDebounce from '../../utils/useDebounce.js';
-import { useAuth } from '../AuthContext.jsx';
-import { todoReducer, initialTodoState, TODO_ACTIONS } from './todoReducer.js';
+import useDebounce from '../../utils/useDebounce.js'
+import { useAuth } from '../../contexts/AuthContext.jsx';
+import { todoReducer, initialTodoState, TODO_ACTIONS } from '../../reducers/todoReducer.js';
 
 export default function TodosPage() {
   const { token } = useAuth();

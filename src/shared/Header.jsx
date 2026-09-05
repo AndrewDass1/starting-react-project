@@ -1,5 +1,5 @@
 // shared/Header.jsx
-import { useAuth } from '../features/AuthContext.jsx';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function Header() {
   const { isAuthenticated, email, logout } = useAuth();
