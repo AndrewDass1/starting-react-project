@@ -19,23 +19,31 @@ export const TODO_ACTIONS = {
 
   SET_SORT: 'SET_SORT',
   SET_FILTER: 'SET_FILTER',
+
   CLEAR_ERROR: 'CLEAR_ERROR',
+  CLEAR_FILTER_ERROR: 'CLEAR_FILTER_ERROR',
+
   RESET_FILTERS: 'RESET_FILTERS',
+
+  INCREMENT_DATA_VERSION: 'INCREMENT_DATA_VERSION',
 };
 
 export const initialTodoState = {
   todoList: [],
-  isTodoListLoading: false,
+  isTodoListLoading: true,      // assignment requires true
   error: '',
   filterError: '',
   sortBy: 'createdAt',
-  sortDirection: 'desc',
+  sortDirection: 'asc',         // assignment requires asc
   filterTerm: '',
   dataVersion: 0,
 };
 
 export function todoReducer(state, action) {
   switch (action.type) {
+    // ---------------------------
+    // FETCH TODOS
+    // ---------------------------
     case TODO_ACTIONS.FETCH_START:
       return {
         ...state,
@@ -49,17 +57,24 @@ export function todoReducer(state, action) {
         ...state,
         isTodoListLoading: false,
         todoList: action.payload.todos,
+        error: '',
         filterError: '',
       };
 
-    case TODO_ACTIONS.FETCH_ERROR:
+    case TODO_ACTIONS.FETCH_ERROR: {
+      const { message, errorType } = action.payload;
+
       return {
         ...state,
         isTodoListLoading: false,
-        error: action.payload.isFilterError ? '' : action.payload.message,
-        filterError: action.payload.isFilterError ? action.payload.message : '',
+        error: errorType === 'general' ? message : state.error,
+        filterError: errorType === 'filter' ? message : state.filterError,
       };
+    }
 
+    // ---------------------------
+    // ADD TODO (optimistic)
+    // ---------------------------
     case TODO_ACTIONS.ADD_TODO_START:
       return {
         ...state,
@@ -70,7 +85,6 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.ADD_TODO_SUCCESS:
       return {
         ...state,
-        dataVersion: state.dataVersion + 1,
         todoList: state.todoList.map((t) =>
           t.id === action.payload.tempId ? action.payload.savedTodo : t
         ),
@@ -83,6 +97,9 @@ export function todoReducer(state, action) {
         todoList: state.todoList.filter((t) => t.id !== action.payload.tempId),
       };
 
+    // ---------------------------
+    // COMPLETE TODO (optimistic)
+    // ---------------------------
     case TODO_ACTIONS.COMPLETE_TODO_START:
       return {
         ...state,
@@ -95,7 +112,6 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
       return {
         ...state,
-        dataVersion: state.dataVersion + 1,
         todoList: state.todoList.map((t) =>
           t.id === action.payload.id ? action.payload.savedTodo : t
         ),
@@ -110,6 +126,9 @@ export function todoReducer(state, action) {
         ),
       };
 
+    // ---------------------------
+    // UPDATE TODO (optimistic)
+    // ---------------------------
     case TODO_ACTIONS.UPDATE_TODO_START:
       return {
         ...state,
@@ -122,7 +141,6 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
       return {
         ...state,
-        dataVersion: state.dataVersion + 1,
         todoList: state.todoList.map((t) =>
           t.id === action.payload.id ? action.payload.savedTodo : t
         ),
@@ -137,6 +155,9 @@ export function todoReducer(state, action) {
         ),
       };
 
+    // ---------------------------
+    // SORT + FILTER
+    // ---------------------------
     case TODO_ACTIONS.SET_SORT:
       return {
         ...state,
@@ -150,23 +171,40 @@ export function todoReducer(state, action) {
         filterTerm: action.payload.filterTerm,
       };
 
+    case TODO_ACTIONS.RESET_FILTERS:
+      return {
+        ...state,
+        filterTerm: '',
+        sortBy: 'createdAt',
+        sortDirection: 'asc',
+        filterError: '',
+      };
+
+    // ---------------------------
+    // CLEAR ERRORS
+    // ---------------------------
     case TODO_ACTIONS.CLEAR_ERROR:
       return {
         ...state,
         error: '',
       };
 
-    case TODO_ACTIONS.RESET_FILTERS:
+    case TODO_ACTIONS.CLEAR_FILTER_ERROR:
       return {
         ...state,
-        filterTerm: '',
-        sortBy: 'createdAt',
-        sortDirection: 'desc',
         filterError: '',
+      };
+
+    // ---------------------------
+    // DATA VERSION
+    // ---------------------------
+    case TODO_ACTIONS.INCREMENT_DATA_VERSION:
+      return {
+        ...state,
+        dataVersion: state.dataVersion + 1,
       };
 
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }
 }
-
