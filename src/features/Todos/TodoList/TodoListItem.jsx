@@ -7,6 +7,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
 
+  // Keep local state synced with external updates
   useEffect(() => {
     setWorkingTitle(todo.title);
   }, [todo.title]);
@@ -40,9 +41,11 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               labelText="Todo"
               onChange={handleEdit}
             />
+
             <button type="button" onClick={handleCancel}>
               Cancel
             </button>
+
             <button type="submit" disabled={!isValidTodoTitle(workingTitle)}>
               Update
             </button>
@@ -57,6 +60,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
                 onChange={() => onCompleteTodo(todo.id)}
               />
             </label>
+
             <button type="button" onClick={() => setIsEditing(true)}>
               {todo.title}
             </button>

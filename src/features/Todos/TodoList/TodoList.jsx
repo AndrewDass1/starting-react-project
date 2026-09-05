@@ -3,18 +3,17 @@ import { useMemo } from 'react';
 import TodoListItem from './TodoListItem.jsx';
 
 function TodoList({ todoList, onCompleteTodo, onUpdateTodo, dataVersion }) {
-  const filteredTodoList = useMemo(() => {
-    return {
-      version: dataVersion,
-      todos: todoList.filter((todo) => todo.isCompleted === false),
-    };
+  const activeTodos = useMemo(() => {
+    return todoList.filter((todo) => !todo.isCompleted);
   }, [todoList, dataVersion]);
 
-  return filteredTodoList.todos.length === 0 ? (
-    <p>Add todo above to get started</p>
-  ) : (
+  if (activeTodos.length === 0) {
+    return <p>Add todo above to get started</p>;
+  }
+
+  return (
     <ul>
-      {filteredTodoList.todos.map((todo) => (
+      {activeTodos.map((todo) => (
         <TodoListItem
           key={todo.id}
           todo={todo}
@@ -27,4 +26,5 @@ function TodoList({ todoList, onCompleteTodo, onUpdateTodo, dataVersion }) {
 }
 
 export default TodoList;
+
 
