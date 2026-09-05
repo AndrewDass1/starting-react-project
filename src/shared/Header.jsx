@@ -1,14 +1,18 @@
-export default function Header({ token, onSetToken, onSetEmail }) {
-  function resetOnSet(){
-      onSetToken('');
-      onSetEmail('');
-  }
+// shared/Header.jsx
+import { useAuth } from '../features/AuthContext.jsx';
+
+export default function Header() {
+  const { token, logout } = useAuth();
 
   return (
     <div>
-      <h1> Todo List </h1>
-
-      {(token) ? <button onClick={resetOnSet}> Logout </button> : ''}
+      <h1>Todo List</h1>
+      {token ? (
+        <button type="button" onClick={logout}>
+          Logout
+        </button>
+      ) : null}
     </div>
-  )
+  );
 }
+
