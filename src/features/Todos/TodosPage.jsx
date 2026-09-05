@@ -21,6 +21,7 @@ export default function TodosPage() {
     sortBy,
     sortDirection,
     filterTerm,
+    dataVersion,
   } = state;
 
   const debounced = useDebounce(filterTerm, 300);
@@ -308,6 +309,7 @@ export default function TodosPage() {
         todoList={todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        dataVersion={dataVersion}
       />
     </div>
   );

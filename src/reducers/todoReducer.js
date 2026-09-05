@@ -34,6 +34,7 @@ export const initialTodoState = {
   sortBy: 'createdAt',
   sortDirection: 'asc',
   filterTerm: '',
+  dataVersion: 0,
 };
 
 export function todoReducer(state, action) {
@@ -181,6 +182,7 @@ export function todoReducer(state, action) {
         sortDirection: 'asc',
         filterError: '',
         error: '',
+        dataVersion: 0,
       };
 
     // ---------------------------
