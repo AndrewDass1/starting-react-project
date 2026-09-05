@@ -1,6 +1,6 @@
 // features/Logon.jsx
 import { useState } from 'react';
-import { useAuth } from './AuthContext.jsx';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function Logon() {
   const { login } = useAuth();
