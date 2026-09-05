@@ -16,18 +16,19 @@ export default function TodosPage() {
   const {
     todoList,
     error,
+    filterError,
     isTodoListLoading,
     sortBy,
     sortDirection,
     filterTerm,
     dataVersion,
-    filterError,
   } = state;
 
   const debounced = useDebounce(filterTerm, 300);
 
+  // Used only to bump dataVersion after optimistic updates
   const invalidateCache = useCallback(() => {
-    dispatch({ type: TODO_ACTIONS.UPDATE_TODO_SUCCESS }); // reducer increments dataVersion
+    dispatch({ type: TODO_ACTIONS.INCREMENT_DATA_VERSION });
   }, []);
 
   function getRequestError(response, action) {
@@ -77,12 +78,13 @@ export default function TodosPage() {
           payload: { todos: getResponse.tasks || [] },
         });
       } catch (error) {
+        const errorType = debounced ? 'filter' : 'general';
+
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
           payload: {
             message: error.message,
-            isFilterError:
-              debounced || sortBy !== 'createdAt' || sortDirection !== 'desc',
+            errorType,
           },
         });
       }
@@ -130,6 +132,8 @@ export default function TodosPage() {
         type: TODO_ACTIONS.ADD_TODO_SUCCESS,
         payload: { tempId, savedTodo },
       });
+
+      invalidateCache();
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
@@ -146,7 +150,7 @@ export default function TodosPage() {
     if (!originalTodo) {
       dispatch({
         type: TODO_ACTIONS.FETCH_ERROR,
-        payload: { message: 'Error. Todo was not found.', isFilterError: false },
+        payload: { message: 'Todo not found.', errorType: 'general' },
       });
       return;
     }
@@ -177,6 +181,8 @@ export default function TodosPage() {
         type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS,
         payload: { id, savedTodo },
       });
+
+      invalidateCache();
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
@@ -194,7 +200,7 @@ export default function TodosPage() {
     if (!originalTodo) {
       dispatch({
         type: TODO_ACTIONS.FETCH_ERROR,
-        payload: { message: 'Error. Todo was not found.', isFilterError: false },
+        payload: { message: 'Todo not found.', errorType: 'general' },
       });
       return;
     }
@@ -230,6 +236,8 @@ export default function TodosPage() {
         type: TODO_ACTIONS.UPDATE_TODO_SUCCESS,
         payload: { id, savedTodo },
       });
+
+      invalidateCache();
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
@@ -271,7 +279,10 @@ export default function TodosPage() {
       {error && (
         <div>
           <p>API error: {error}</p>
-          <button type="button" onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}>
+          <button
+            type="button"
+            onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}
+          >
             Clear Error
           </button>
         </div>
@@ -280,7 +291,10 @@ export default function TodosPage() {
       {filterError && (
         <div>
           <p>Filter error: {filterError}</p>
-          <button type="button" onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}>
+          <button
+            type="button"
+            onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}
+          >
             Clear Filter Error
           </button>
           <button type="button" onClick={resetFilters}>
@@ -311,3 +325,4 @@ export default function TodosPage() {
     </div>
   );
 }
+

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useAuth } from './AuthContext.jsx';
 
 export default function Logon() {
-  const { setEmail, setToken } = useAuth();
+  const { login } = useAuth();
 
   const [emailInput, setEmailInput] = useState('');
   const [password, setPassword] = useState('');
@@ -15,28 +15,13 @@ export default function Logon() {
     setIsLoggingOn(true);
     setAuthError('');
 
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({ email: emailInput, password }),
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-    };
+    const result = await login(emailInput, password);
 
-    try {
-      const response = await fetch('/api/users/logon', options);
-      const data = await response.json();
-
-      if (response.status === 200 && data.name && data.csrfToken) {
-        setEmail(data.name);
-        setToken(data.csrfToken);
-      } else {
-        setAuthError(`Authentication failed: ${data?.message}`);
-      }
-    } catch (error) {
-      setAuthError(`${error.name}: ${error.message}`);
-    } finally {
-      setIsLoggingOn(false);
+    if (!result.success) {
+      setAuthError(result.error || 'Authentication failed.');
     }
+
+    setIsLoggingOn(false);
   }
 
   return (
@@ -73,4 +58,5 @@ export default function Logon() {
     </div>
   );
 }
+
 
