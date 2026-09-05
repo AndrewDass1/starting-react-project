@@ -24,19 +24,16 @@ export const TODO_ACTIONS = {
   CLEAR_FILTER_ERROR: 'CLEAR_FILTER_ERROR',
 
   RESET_FILTERS: 'RESET_FILTERS',
-
-  INCREMENT_DATA_VERSION: 'INCREMENT_DATA_VERSION',
 };
 
 export const initialTodoState = {
   todoList: [],
-  isTodoListLoading: true,      // assignment requires true
+  isTodoListLoading: true,
   error: '',
   filterError: '',
   sortBy: 'createdAt',
-  sortDirection: 'asc',         // assignment requires asc
+  sortDirection: 'asc',
   filterTerm: '',
-  dataVersion: 0,
 };
 
 export function todoReducer(state, action) {
@@ -67,8 +64,8 @@ export function todoReducer(state, action) {
       return {
         ...state,
         isTodoListLoading: false,
-        error: errorType === 'general' ? message : state.error,
-        filterError: errorType === 'filter' ? message : state.filterError,
+        error: errorType === 'general' ? message : '',
+        filterError: errorType === 'filter' ? message : '',
       };
     }
 
@@ -79,6 +76,7 @@ export function todoReducer(state, action) {
       return {
         ...state,
         error: '',
+        filterError: '',
         todoList: [action.payload.newTodo, ...state.todoList],
       };
 
@@ -104,6 +102,7 @@ export function todoReducer(state, action) {
       return {
         ...state,
         error: '',
+        filterError: '',
         todoList: state.todoList.map((t) =>
           t.id === action.payload.id ? { ...t, isCompleted: true } : t
         ),
@@ -133,6 +132,7 @@ export function todoReducer(state, action) {
       return {
         ...state,
         error: '',
+        filterError: '',
         todoList: state.todoList.map((t) =>
           t.id === action.payload.id ? action.payload.updatedTodo : t
         ),
@@ -169,6 +169,8 @@ export function todoReducer(state, action) {
       return {
         ...state,
         filterTerm: action.payload.filterTerm,
+        error: '',
+        filterError: '',
       };
 
     case TODO_ACTIONS.RESET_FILTERS:
@@ -178,6 +180,7 @@ export function todoReducer(state, action) {
         sortBy: 'createdAt',
         sortDirection: 'asc',
         filterError: '',
+        error: '',
       };
 
     // ---------------------------
@@ -193,15 +196,6 @@ export function todoReducer(state, action) {
       return {
         ...state,
         filterError: '',
-      };
-
-    // ---------------------------
-    // DATA VERSION
-    // ---------------------------
-    case TODO_ACTIONS.INCREMENT_DATA_VERSION:
-      return {
-        ...state,
-        dataVersion: state.dataVersion + 1,
       };
 
     default:

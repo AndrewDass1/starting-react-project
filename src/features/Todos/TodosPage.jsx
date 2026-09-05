@@ -5,7 +5,7 @@ import TodoList from './TodoList/TodoList.jsx';
 import SortBy from '../../shared/SortBy.jsx';
 import FilterInput from '../../shared/FilterInput.jsx';
 
-import useDebounce from '../../utils/useDebounce.js'
+import useDebounce from '../../utils/useDebounce.js';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { todoReducer, initialTodoState, TODO_ACTIONS } from '../../reducers/todoReducer.js';
 
@@ -21,15 +21,9 @@ export default function TodosPage() {
     sortBy,
     sortDirection,
     filterTerm,
-    dataVersion,
   } = state;
 
   const debounced = useDebounce(filterTerm, 300);
-
-  // Used only to bump dataVersion after optimistic updates
-  const invalidateCache = useCallback(() => {
-    dispatch({ type: TODO_ACTIONS.INCREMENT_DATA_VERSION });
-  }, []);
 
   function getRequestError(response, action) {
     if (response.status === 401 || response.status === 403) {
@@ -132,8 +126,6 @@ export default function TodosPage() {
         type: TODO_ACTIONS.ADD_TODO_SUCCESS,
         payload: { tempId, savedTodo },
       });
-
-      invalidateCache();
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
@@ -181,8 +173,6 @@ export default function TodosPage() {
         type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS,
         payload: { id, savedTodo },
       });
-
-      invalidateCache();
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
@@ -236,8 +226,6 @@ export default function TodosPage() {
         type: TODO_ACTIONS.UPDATE_TODO_SUCCESS,
         payload: { id, savedTodo },
       });
-
-      invalidateCache();
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
@@ -320,9 +308,7 @@ export default function TodosPage() {
         todoList={todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
-        dataVersion={dataVersion}
       />
     </div>
   );
 }
-

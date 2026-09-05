@@ -1,4 +1,4 @@
-// features/AuthContext.jsx
+// contexts/AuthContext.jsx
 import { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext(null);
@@ -7,9 +7,6 @@ export function AuthProvider({ children }) {
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
 
-  // ---------------------------
-  // LOGIN (API + state update)
-  // ---------------------------
   async function login(userEmail, password) {
     try {
       const response = await fetch('/api/users/logon', {
@@ -32,7 +29,7 @@ export function AuthProvider({ children }) {
       setToken(data.csrfToken);
 
       return { success: true };
-    } catch (err) {
+    } catch {
       return {
         success: false,
         error: 'Network error during login.',
@@ -40,9 +37,6 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // ---------------------------
-  // LOGOUT (API + state clear)
-  // ---------------------------
   async function logout() {
     try {
       const response = await fetch('/api/users/logoff', {
@@ -54,7 +48,6 @@ export function AuthProvider({ children }) {
         credentials: 'include',
       });
 
-      // Clear local auth state regardless of API result
       setEmail('');
       setToken('');
 
@@ -66,7 +59,7 @@ export function AuthProvider({ children }) {
       }
 
       return { success: true };
-    } catch (err) {
+    } catch {
       setEmail('');
       setToken('');
       return {
@@ -94,5 +87,6 @@ export function useAuth() {
   }
   return ctx;
 }
+
 
 
