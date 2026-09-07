@@ -4,7 +4,9 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 
 import StatusFilter from '../shared/StatusFilter.jsx';
 import TodoList from '../features/Todos/TodoList/TodoList.jsx';
-import TodoForm from '../features/Todos/TodoForm/TodoForm.jsx';
+import TodoForm from '../features/Todos/TodoForm.jsx';
+import SortBy from '../shared/SortBy.jsx';
+import FilterInput from '../shared/FilterInput.jsx';
 
 const initialState = {
   todoList: [],
@@ -69,29 +71,35 @@ export default function TodosPage() {
   const statusFilter = searchParams.get('status') || 'all';
 
   useEffect(() => {
-    async function loadTodos() {
+    async function loadTasks() {
       try {
-        const response = await fetch('/api/todos', {
+        const response = await fetch('/api/tasks', {
           headers: { 'X-CSRF-TOKEN': token },
           credentials: 'include',
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to load todos');
+        if (response.status === 401) {
+          throw new Error('Unauthorized: please log in again.');
         }
 
-        const todos = await response.json();
-        dispatch({ type: 'loadSuccess', todos });
+        if (!response.ok) {
+          throw new Error('Failed to load tasks.');
+        }
+
+        const result = await response.json();
+        const tasks = result.tasks || []; // backend shape fix
+
+        dispatch({ type: 'loadSuccess', todos: tasks });
       } catch (err) {
         dispatch({ type: 'loadError', error: err.message });
       }
     }
 
-    loadTodos();
+    loadTasks();
   }, [token]);
 
   async function addTodo(title) {
-    const response = await fetch('/api/todos', {
+    const response = await fetch('/api/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,14 +110,15 @@ export default function TodosPage() {
     });
 
     if (response.ok) {
-      const todo = await response.json();
+      const result = await response.json();
+      const todo = result.task || result; // backend shape flexibility
       dispatch({ type: 'addTodo', todo });
     }
   }
 
   async function updateTodo(todo) {
-    const response = await fetch(`/api/todos/${todo.id}`, {
-      method: 'PUT',
+    const response = await fetch(`/api/tasks/${todo.id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': token,
@@ -119,13 +128,15 @@ export default function TodosPage() {
     });
 
     if (response.ok) {
-      const updated = await response.json();
+      const result = await response.json();
+      const updated = result.task || result;
       dispatch({ type: 'updateTodo', todo: updated });
     }
   }
 
+
   async function completeTodo(id) {
-    const response = await fetch(`/api/todos/${id}/complete`, {
+    const response = await fetch(`/api/tasks/${id}/complete`, {
       method: 'POST',
       headers: { 'X-CSRF-TOKEN': token },
       credentials: 'include',
@@ -136,13 +147,16 @@ export default function TodosPage() {
     }
   }
 
-  if (state.loading) return <p>Loading todos...</p>;
+  if (state.loading) return <p>Loading tasks...</p>;
   if (state.error) return <p>Error: {state.error}</p>;
+
 
   return (
     <div>
-      <h2>Your Todos</h2>
+      <h2>Your Tasks</h2>
 
+      <SortBy />
+      <FilterInput />
       <StatusFilter />
 
       <TodoForm onAddTodo={addTodo} />
