@@ -1,3 +1,4 @@
+// HomePage.jsx
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../contexts/AuthContext.jsx';
@@ -14,5 +15,5 @@ export default function HomePage() {
     }
   }, [isAuthenticated, navigate]);
 
-  return null;
+  return <p>Redirecting...</p>;
 }

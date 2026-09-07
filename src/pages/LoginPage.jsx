@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext.jsx';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -13,8 +13,14 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/todos', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
     setError('');
 
     const result = await login(email, password);
@@ -30,11 +36,26 @@ export default function LoginPage() {
   return (
     <div>
       <h2>Login</h2>
-      {error && <p>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
       <form onSubmit={handleSubmit}>
-        <input value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button>Log In</button>
+        <div>
+          <label>Email:</label>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+          />
+        </div>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );
