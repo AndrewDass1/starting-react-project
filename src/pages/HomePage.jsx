@@ -1,9 +1,18 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { useAuth } from '../contexts/AuthContext.jsx';
+
 export default function HomePage() {
-  return (
-    <div>
-      <h2>Welcome</h2>
-      <p>This is the home page of your Todo application.</p>
-      <p>Use the navigation above to explore the app.</p>
-    </div>
-  );
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/todos', { replace: true });
+    } else {
+      navigate('/login', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  return null;
 }
