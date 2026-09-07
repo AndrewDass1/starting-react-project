@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function ProfilePage() {
-  const { isAuthenticated, email, token } = useAuth();
+  const { isAuthenticated, email, token, user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -54,20 +54,24 @@ export default function ProfilePage() {
   return (
     <div>
       <h2>Your Profile</h2>
-      <p>Email: {email}</p>
+      <p>User: {user?.name ?? email}</p>
       <p>Token: {token ? 'Present' : 'Missing'}</p>
 
-      <h3>Todo Statistics</h3>
-      <p>Total todos: {stats.total}</p>
-      <p>Completed: {stats.completed}</p>
-      <p>Active: {stats.active}</p>
-      <p>Completion: {stats.completion}%</p>
-      <p>
-        Status:{' '}
-        {stats.completion === 100
-          ? 'All todos completed!'
-          : 'You still have todos to finish.'}
-      </p>
+      {stats && (
+        <>
+          <h3>Todo Statistics</h3>
+          <p>Total todos: {stats.total}</p>
+          <p>Completed: {stats.completed}</p>
+          <p>Active: {stats.active}</p>
+          <p>Completion: {stats.completion}%</p>
+          <p>
+            Status:{' '}
+            {stats.completion === 100
+              ? 'All todos completed!'
+              : 'You still have todos to finish.'}
+          </p>
+        </>
+      )}
     </div>
   );
 }
