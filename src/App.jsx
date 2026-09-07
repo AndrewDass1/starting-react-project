@@ -6,7 +6,7 @@ import Header from './shared/Header.jsx';
 import HomePage from './pages/HomePage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import TodosPage from './features/Todos/TodosPage.jsx';
+import TodosPage from './pages/TodosPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 

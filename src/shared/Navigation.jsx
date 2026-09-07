@@ -5,6 +5,7 @@ function navLinkStyle({ isActive }) {
   return {
     fontWeight: isActive ? 'bold' : 'normal',
     textDecoration: isActive ? 'underline' : 'none',
+    marginRight: '1rem',
   };
 }
 
@@ -13,7 +14,7 @@ export default function Navigation() {
 
   return (
     <nav>
-      <ul>
+      <ul style={{ listStyle: 'none', display: 'flex', padding: 0, margin: 0 }}>
         <li>
           <NavLink to="/about" style={navLinkStyle}>
             About

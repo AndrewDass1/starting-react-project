@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function ProfilePage() {
-  const { isAuthenticated, token } = useAuth();
+  const { isAuthenticated, token, user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -16,7 +16,7 @@ export default function ProfilePage() {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to load stats');
+          throw new Error('Failed to load statistics');
         }
 
         const todos = await response.json();
@@ -53,11 +53,13 @@ export default function ProfilePage() {
   return (
     <div>
       <h2>Your Profile</h2>
+      <p>User: {user?.name ?? 'Unknown'}</p>
       <p>Authenticated: yes</p>
       <p>Total todos: {stats.total}</p>
       <p>Completed: {stats.completed}</p>
       <p>Active: {stats.active}</p>
       <p>Completion: {stats.completion}%</p>
+      <p>Status: {stats.completion === 100 ? 'All done!' : 'Still working...'}</p>
     </div>
   );
 }
