@@ -1,7 +1,7 @@
+// App.jsx
 import { Routes, Route } from 'react-router';
 
 import Header from './shared/Header.jsx';
-import Navigation from './shared/Navigation.jsx';
 
 import HomePage from './pages/HomePage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
@@ -16,7 +16,6 @@ function App() {
   return (
     <div>
       <Header />
-      <Navigation />
 
       <Routes>
         <Route path="/" element={<HomePage />} />

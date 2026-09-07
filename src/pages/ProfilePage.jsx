@@ -2,27 +2,32 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function ProfilePage() {
-  const { token } = useAuth();
+  const { isAuthenticated, token } = useAuth();
   const [stats, setStats] = useState(null);
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     async function loadStats() {
       try {
-        const res = await fetch('/api/tasks', {
+        const response = await fetch('/api/todos', {
           headers: { 'X-CSRF-TOKEN': token },
-          credentials: 'include'
+          credentials: 'include',
         });
 
-        if (!res.ok) throw new Error('Failed to load stats');
+        if (!response.ok) {
+          throw new Error('Failed to load stats');
+        }
 
-        const tasks = await res.json();
-        const total = tasks.length;
-        const completed = tasks.filter(t => t.completed).length;
+        const todos = await response.json();
+
+        const total = todos.length;
+        const completed = todos.filter((t) => t.isCompleted).length;
         const active = total - completed;
+        const completion =
+          total === 0 ? 0 : Math.round((completed / total) * 100);
 
-        setStats({ total, completed, active });
+        setStats({ total, completed, active, completion });
       } catch (err) {
         setError(err.message);
       } finally {
@@ -30,19 +35,29 @@ export default function ProfilePage() {
       }
     }
 
-    loadStats();
-  }, [token]);
+    if (isAuthenticated) {
+      loadStats();
+    } else {
+      setLoading(false);
+      setStats(null);
+    }
+  }, [isAuthenticated, token]);
 
-  if (loading) return <p>Loading…</p>;
+  if (loading) return <p>Loading profile...</p>;
   if (error) return <p>Error: {error}</p>;
+
+  if (!isAuthenticated) {
+    return <p>You are not logged in.</p>;
+  }
 
   return (
     <div>
       <h2>Your Profile</h2>
-      <p>Total: {stats.total}</p>
+      <p>Authenticated: yes</p>
+      <p>Total todos: {stats.total}</p>
       <p>Completed: {stats.completed}</p>
       <p>Active: {stats.active}</p>
-      <p>Completion: {(stats.completed / stats.total) * 100}%</p>
+      <p>Completion: {stats.completion}%</p>
     </div>
   );
 }

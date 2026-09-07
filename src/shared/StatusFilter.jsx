@@ -9,8 +9,7 @@ export default function StatusFilter() {
     const newStatus = event.target.value;
 
     if (newStatus === 'all') {
-      searchParams.delete('status');
-      setSearchParams(searchParams);
+      setSearchParams({});
     } else {
       setSearchParams({ status: newStatus });
     }
@@ -19,11 +18,7 @@ export default function StatusFilter() {
   return (
     <div>
       <label htmlFor="statusFilter">Show:</label>
-      <select
-        id="statusFilter"
-        value={status}
-        onChange={handleChange}
-      >
+      <select id="statusFilter" value={status} onChange={handleChange}>
         <option value="all">All</option>
         <option value="active">Active</option>
         <option value="completed">Completed</option>
