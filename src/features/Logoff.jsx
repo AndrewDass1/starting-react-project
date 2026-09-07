@@ -1,4 +1,3 @@
-// features/Logoff.jsx
 import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function Logoff() {

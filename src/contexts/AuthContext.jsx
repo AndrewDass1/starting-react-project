@@ -1,4 +1,3 @@
-// contexts/AuthContext.jsx
 import { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext(null);
@@ -81,11 +80,11 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) {
+  const context = useContext(AuthContext);
+  if (!context) {
     throw new Error('useAuth must be used within AuthProvider');
   }
-  return ctx;
+  return context;
 }
 
 
