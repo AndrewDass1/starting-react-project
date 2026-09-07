@@ -25,14 +25,17 @@ function reducer(state, action) {
         loading: false,
         error: '',
       };
+
     case 'loadError':
       return { ...state, loading: false, error: action.error };
+
     case 'addTodo':
       return {
         ...state,
         todoList: [...state.todoList, action.todo],
         dataVersion: state.dataVersion + 1,
       };
+
     case 'updateTodo':
       return {
         ...state,
@@ -41,6 +44,7 @@ function reducer(state, action) {
         ),
         dataVersion: state.dataVersion + 1,
       };
+
     case 'completeTodo':
       return {
         ...state,
@@ -49,6 +53,7 @@ function reducer(state, action) {
         ),
         dataVersion: state.dataVersion + 1,
       };
+
     default:
       return state;
   }
@@ -60,8 +65,10 @@ export default function TodosPage() {
   const [searchParams] = useSearchParams();
   const statusFilter = searchParams.get('status') || 'all';
 
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [sortDirection, setSortDirection] = useState('desc');
+
   const [filterTerm, setFilterTerm] = useState('');
-  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     async function loadTasks() {
@@ -75,7 +82,14 @@ export default function TodosPage() {
           throw new Error('Failed to load tasks.');
         }
 
-        const todos = await response.json();
+        const data = await response.json();
+
+        const todos = Array.isArray(data)
+          ? data
+          : Array.isArray(data.tasks)
+          ? data.tasks
+          : [];
+
         dispatch({ type: 'loadSuccess', todos });
       } catch (err) {
         dispatch({ type: 'loadError', error: err.message });
@@ -102,15 +116,15 @@ export default function TodosPage() {
     }
   }
 
-  async function updateTodo(todo) {
-    const response = await fetch(`/api/tasks/${todo.id}`, {
+  async function updateTodo(id, title) {
+    const response = await fetch(`/api/tasks/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': token,
       },
       credentials: 'include',
-      body: JSON.stringify(todo),
+      body: JSON.stringify({ title }),
     });
 
     if (response.ok) {
@@ -120,10 +134,14 @@ export default function TodosPage() {
   }
 
   async function completeTodo(id) {
-    const response = await fetch(`/api/tasks/${id}/complete`, {
-      method: 'POST',
-      headers: { 'X-CSRF-TOKEN': token },
+    const response = await fetch(`/api/tasks/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': token,
+      },
       credentials: 'include',
+      body: JSON.stringify({ isCompleted: true }),
     });
 
     if (response.ok) {
@@ -138,14 +156,21 @@ export default function TodosPage() {
     <div>
       <h2>Your Todos</h2>
 
-      <SortBy sortOrder={sortOrder} onSortChange={setSortOrder} />
+      <SortBy
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        onSortByChange={setSortBy}
+        onSortDirectionChange={setSortDirection}
+      />
+
       <FilterInput filterTerm={filterTerm} onFilterChange={setFilterTerm} />
+
       <StatusFilter />
 
       <TodoForm onAddTodo={addTodo} />
 
       <TodoList
-        todoList={state.todoList}
+        todoList={state.todoList || []}
         dataVersion={state.dataVersion}
         statusFilter={statusFilter}
         onUpdateTodo={updateTodo}

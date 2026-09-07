@@ -7,7 +7,7 @@ export default function SortBy({
   return (
     <div>
       <div>
-        <label htmlFor="sortBy">Sort By</label>
+        <label htmlFor="sortBy">Sort By:</label>
         <select
           id="sortBy"
           value={sortBy}
@@ -19,7 +19,7 @@ export default function SortBy({
       </div>
 
       <div>
-        <label htmlFor="sortDirection">Order</label>
+        <label htmlFor="sortDirection">Order:</label>
         <select
           id="sortDirection"
           value={sortDirection}

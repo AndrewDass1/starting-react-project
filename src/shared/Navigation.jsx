@@ -16,6 +16,12 @@ export default function Navigation() {
     <nav>
       <ul style={{ listStyle: 'none', display: 'flex', padding: 0, margin: 0 }}>
         <li>
+          <NavLink to="/" style={navLinkStyle} end>
+            Home
+          </NavLink>
+        </li>
+
+        <li>
           <NavLink to="/about" style={navLinkStyle}>
             About
           </NavLink>
@@ -36,6 +42,7 @@ export default function Navigation() {
                 Todos
               </NavLink>
             </li>
+
             <li>
               <NavLink to="/profile" style={navLinkStyle}>
                 Profile
