@@ -59,19 +59,13 @@ export default function ProfilePage() {
 
       {stats && (
         <>
-          <h3>Todo Statistics</h3>
-          <p>Total todos: {stats.total}</p>
+          <p>Total: {stats.total}</p>
           <p>Completed: {stats.completed}</p>
           <p>Active: {stats.active}</p>
           <p>Completion: {stats.completion}%</p>
-          <p>
-            Status:{' '}
-            {stats.completion === 100
-              ? 'All todos completed!'
-              : 'You still have todos to finish.'}
-          </p>
         </>
       )}
+
     </div>
   );
 }
