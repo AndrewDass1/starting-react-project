@@ -8,6 +8,9 @@ import TodoForm from '../features/Todos/TodoForm.jsx';
 import SortBy from '../shared/SortBy.jsx';
 import FilterInput from '../shared/FilterInput.jsx';
 
+const [filterTerm, setFilterTerm] = useState('');
+const [sortOrder, setSortOrder] = useState('asc');
+
 const initialState = {
   todoList: [],
   dataVersion: 0,
@@ -155,8 +158,8 @@ export default function TodosPage() {
     <div>
       <h2>Your Tasks</h2>
 
-      <SortBy />
-      <FilterInput />
+      <SortBy sortOrder={sortOrder} onSortChange={setSortOrder}/>
+      <FilterInput filterTerm={filterTerm} onFilterChange={setFilterTerm}/>
       <StatusFilter />
 
       <TodoForm onAddTodo={addTodo} />

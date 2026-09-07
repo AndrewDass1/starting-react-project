@@ -16,13 +16,11 @@ export default function TodoList({
   }, [todoList, statusFilter]);
 
   if (filteredTodos.length === 0) {
-    if (statusFilter === 'active') {
-      return <p>You have no active todos. Nice work!</p>;
+if (filteredTodos.length === 0) {
+      if (statusFilter === 'active') return <p>You have no active todos.</p>;
+      if (statusFilter === 'completed') return <p>No completed todos yet.</p>;
+      return <p>No todos yet. Add one to get started.</p>;
     }
-    if (statusFilter === 'completed') {
-      return <p>No todos have been completed yet.</p>;
-    }
-    return <p>You don’t have any todos yet. Add one to get started.</p>;
   }
 
   return (

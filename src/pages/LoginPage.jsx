@@ -7,17 +7,16 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/todos';
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && location.state?.from) {
       navigate(from, { replace: true });
     }
-  }, [isAuthenticated, navigate, from]);
+  }, [isAuthenticated, navigate, from, location.state]);
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -36,7 +35,7 @@ export default function LoginPage() {
   return (
     <div>
       <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p>{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <div>
