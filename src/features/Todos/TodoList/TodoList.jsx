@@ -12,9 +12,13 @@ export default function TodoList({
   });
 
   if (filtered.length === 0) {
-    if (statusFilter === 'active') return <p>No active todos.</p>;
-    if (statusFilter === 'completed') return <p>No completed todos.</p>;
-    return <p>No todos yet.</p>;
+    if (statusFilter === 'active') {
+      return <p>You have no active tasks. Nice!</p>;
+    }
+    if (statusFilter === 'completed') {
+      return <p>No tasks have been completed yet.</p>;
+    }
+    return <p>You don’t have any tasks yet. Add one to get started.</p>;
   }
 
   return (
@@ -22,10 +26,9 @@ export default function TodoList({
       {filtered.map((todo) => (
         <li key={`${dataVersion}-${todo.id}`}>
           {todo.title}
+          {/* hook up onUpdateTodo/onCompleteTodo to buttons/checkboxes here */}
         </li>
       ))}
     </ul>
   );
 }
-
-
