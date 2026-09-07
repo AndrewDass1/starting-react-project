@@ -1,4 +1,3 @@
-// shared/SortBy.jsx
 export default function SortBy({
   sortBy,
   sortDirection,

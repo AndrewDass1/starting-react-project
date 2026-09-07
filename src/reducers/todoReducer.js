@@ -1,5 +1,3 @@
-// src/reducers/todoReducer.js
-
 export const TODO_ACTIONS = {
   FETCH_START: 'FETCH_START',
   FETCH_SUCCESS: 'FETCH_SUCCESS',
@@ -39,9 +37,6 @@ export const initialTodoState = {
 
 export function todoReducer(state, action) {
   switch (action.type) {
-    // ---------------------------
-    // FETCH TODOS
-    // ---------------------------
     case TODO_ACTIONS.FETCH_START:
       return {
         ...state,
@@ -70,9 +65,6 @@ export function todoReducer(state, action) {
       };
     }
 
-    // ---------------------------
-    // ADD TODO (optimistic)
-    // ---------------------------
     case TODO_ACTIONS.ADD_TODO_START:
       return {
         ...state,
@@ -96,9 +88,6 @@ export function todoReducer(state, action) {
         todoList: state.todoList.filter((t) => t.id !== action.payload.tempId),
       };
 
-    // ---------------------------
-    // COMPLETE TODO (optimistic)
-    // ---------------------------
     case TODO_ACTIONS.COMPLETE_TODO_START:
       return {
         ...state,
@@ -126,9 +115,6 @@ export function todoReducer(state, action) {
         ),
       };
 
-    // ---------------------------
-    // UPDATE TODO (optimistic)
-    // ---------------------------
     case TODO_ACTIONS.UPDATE_TODO_START:
       return {
         ...state,
@@ -156,9 +142,6 @@ export function todoReducer(state, action) {
         ),
       };
 
-    // ---------------------------
-    // SORT + FILTER
-    // ---------------------------
     case TODO_ACTIONS.SET_SORT:
       return {
         ...state,
@@ -185,9 +168,6 @@ export function todoReducer(state, action) {
         dataVersion: 0,
       };
 
-    // ---------------------------
-    // CLEAR ERRORS
-    // ---------------------------
     case TODO_ACTIONS.CLEAR_ERROR:
       return {
         ...state,

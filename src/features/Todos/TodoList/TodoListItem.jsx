@@ -70,4 +70,3 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
 }
 
 export default TodoListItem;
-
