@@ -1,15 +1,12 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
 import StatusFilter from '../shared/StatusFilter.jsx';
-import TodoList from '../features/Todos/TodoList/TodoList.jsx';
-import TodoForm from '../features/Todos/TodoForm.jsx';
 import SortBy from '../shared/SortBy.jsx';
 import FilterInput from '../shared/FilterInput.jsx';
-
-const [filterTerm, setFilterTerm] = useState('');
-const [sortOrder, setSortOrder] = useState('asc');
+import TodoList from '../features/Todos/TodoList/TodoList.jsx';
+import TodoForm from '../features/Todos/TodoForm.jsx';
 
 const initialState = {
   todoList: [],
@@ -28,21 +25,14 @@ function reducer(state, action) {
         loading: false,
         error: '',
       };
-
     case 'loadError':
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
-      };
-
+      return { ...state, loading: false, error: action.error };
     case 'addTodo':
       return {
         ...state,
         todoList: [...state.todoList, action.todo],
         dataVersion: state.dataVersion + 1,
       };
-
     case 'updateTodo':
       return {
         ...state,
@@ -51,7 +41,6 @@ function reducer(state, action) {
         ),
         dataVersion: state.dataVersion + 1,
       };
-
     case 'completeTodo':
       return {
         ...state,
@@ -60,7 +49,6 @@ function reducer(state, action) {
         ),
         dataVersion: state.dataVersion + 1,
       };
-
     default:
       return state;
   }
@@ -69,9 +57,11 @@ function reducer(state, action) {
 export default function TodosPage() {
   const { token } = useAuth();
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const [searchParams] = useSearchParams();
   const statusFilter = searchParams.get('status') || 'all';
+
+  const [filterTerm, setFilterTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     async function loadTasks() {
@@ -81,18 +71,12 @@ export default function TodosPage() {
           credentials: 'include',
         });
 
-        if (response.status === 401) {
-          throw new Error('Unauthorized: please log in again.');
-        }
-
         if (!response.ok) {
           throw new Error('Failed to load tasks.');
         }
 
-        const result = await response.json();
-        const tasks = result.tasks || []; // backend shape fix
-
-        dispatch({ type: 'loadSuccess', todos: tasks });
+        const todos = await response.json();
+        dispatch({ type: 'loadSuccess', todos });
       } catch (err) {
         dispatch({ type: 'loadError', error: err.message });
       }
@@ -113,8 +97,7 @@ export default function TodosPage() {
     });
 
     if (response.ok) {
-      const result = await response.json();
-      const todo = result.task || result; // backend shape flexibility
+      const todo = await response.json();
       dispatch({ type: 'addTodo', todo });
     }
   }
@@ -131,12 +114,10 @@ export default function TodosPage() {
     });
 
     if (response.ok) {
-      const result = await response.json();
-      const updated = result.task || result;
+      const updated = await response.json();
       dispatch({ type: 'updateTodo', todo: updated });
     }
   }
-
 
   async function completeTodo(id) {
     const response = await fetch(`/api/tasks/${id}/complete`, {
@@ -150,16 +131,15 @@ export default function TodosPage() {
     }
   }
 
-  if (state.loading) return <p>Loading tasks...</p>;
+  if (state.loading) return <p>Loading todos...</p>;
   if (state.error) return <p>Error: {state.error}</p>;
-
 
   return (
     <div>
-      <h2>Your Tasks</h2>
+      <h2>Your Todos</h2>
 
-      <SortBy sortOrder={sortOrder} onSortChange={setSortOrder}/>
-      <FilterInput filterTerm={filterTerm} onFilterChange={setFilterTerm}/>
+      <SortBy sortOrder={sortOrder} onSortChange={setSortOrder} />
+      <FilterInput filterTerm={filterTerm} onFilterChange={setFilterTerm} />
       <StatusFilter />
 
       <TodoForm onAddTodo={addTodo} />
