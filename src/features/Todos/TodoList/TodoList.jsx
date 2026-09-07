@@ -1,5 +1,4 @@
-// src/features/Todos/TodoList/TodoList.jsx
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 export default function TodoList({
   todoList,
@@ -8,6 +7,9 @@ export default function TodoList({
   onUpdateTodo,
   onCompleteTodo,
 }) {
+  const [editingId, setEditingId] = useState(null);
+  const [workingTitle, setWorkingTitle] = useState('');
+
   const filteredTodos = useMemo(() => {
     return todoList.filter((todo) => {
       if (statusFilter === 'active') return !todo.isCompleted;
@@ -26,12 +28,50 @@ export default function TodoList({
     return <p>You don’t have any todos yet. Add one to get started.</p>;
   }
 
+  function startEditing(todo) {
+    setEditingId(todo.id);
+    setWorkingTitle(todo.title);
+  }
+
+  function cancelEditing() {
+    setEditingId(null);
+    setWorkingTitle('');
+  }
+
+  function saveUpdate(todo) {
+    const updated = { ...todo, title: workingTitle };
+    onUpdateTodo(updated);
+    setEditingId(null);
+  }
+
   return (
     <ul>
       {filteredTodos.map((todo) => (
         <li key={`${dataVersion}-${todo.id}`}>
-          {todo.title}
-          {/* hook up onUpdateTodo/onCompleteTodo here */}
+          <label>
+            <input
+              type="checkbox"
+              checked={todo.isCompleted}
+              onChange={() => onCompleteTodo(todo.id)}
+            />
+          </label>
+
+          {editingId === todo.id ? (
+            <>
+              <input
+                type="text"
+                value={workingTitle}
+                onChange={(e) => setWorkingTitle(e.target.value)}
+              />
+              <button onClick={() => saveUpdate(todo)}>Save</button>
+              <button onClick={cancelEditing}>Cancel</button>
+            </>
+          ) : (
+            <>
+              <span>{todo.title}</span>
+              <button onClick={() => startEditing(todo)}>Edit</button>
+            </>
+          )}
         </li>
       ))}
     </ul>
