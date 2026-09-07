@@ -14,5 +14,5 @@ export default function HomePage() {
     }
   }, [isAuthenticated, navigate]);
 
-  return null;
+  return <p>Redirecting...</p>;
 }

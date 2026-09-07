@@ -1,19 +1,50 @@
 import { useMemo } from 'react';
+import TodoListItem from './TodoListItem.jsx';
 
 export default function TodoList({
   todoList,
   dataVersion,
   statusFilter,
+  filterTerm,
+  sortBy,
+  sortDirection,
   onUpdateTodo,
   onCompleteTodo,
 }) {
+  const safeList = Array.isArray(todoList) ? todoList : [];
+
   const filteredTodos = useMemo(() => {
-    return todoList.filter((todo) => {
-      if (statusFilter === 'active') return !todo.isCompleted;
-      if (statusFilter === 'completed') return todo.isCompleted;
-      return true;
+    let list = [...safeList];
+
+    if (statusFilter === 'active') {
+      list = list.filter((todo) => !todo.isCompleted);
+    } else if (statusFilter === 'completed') {
+      list = list.filter((todo) => todo.isCompleted);
+    }
+
+    if (filterTerm && filterTerm.trim() !== '') {
+      const term = filterTerm.toLowerCase();
+      list = list.filter((todo) =>
+        todo.title.toLowerCase().includes(term)
+      );
+    }
+
+    list.sort((a, b) => {
+      let valueA = a[sortBy];
+      let valueB = b[sortBy];
+
+      if (sortBy === 'createdAt') {
+        valueA = new Date(valueA);
+        valueB = new Date(valueB);
+      }
+
+      if (valueA < valueB) return sortDirection === 'asc' ? -1 : 1;
+      if (valueA > valueB) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
     });
-  }, [todoList, statusFilter]);
+
+    return list;
+  }, [safeList, statusFilter, filterTerm, sortBy, sortDirection]);
 
   if (filteredTodos.length === 0) {
     if (statusFilter === 'active') {
@@ -28,17 +59,12 @@ export default function TodoList({
   return (
     <ul>
       {filteredTodos.map((todo) => (
-        <li key={`${dataVersion}-${todo.id}`}>
-          <label>
-            <input
-              type="checkbox"
-              checked={todo.isCompleted}
-              onChange={() => onCompleteTodo(todo.id)}
-            />
-            {todo.title}
-          </label>
-          <button onClick={() => onUpdateTodo(todo)}>Edit</button>
-        </li>
+        <TodoListItem
+          key={`${dataVersion}-${todo.id}`}
+          todo={todo}
+          onCompleteTodo={onCompleteTodo}
+          onUpdateTodo={onUpdateTodo}
+        />
       ))}
     </ul>
   );

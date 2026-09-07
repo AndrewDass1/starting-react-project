@@ -23,7 +23,13 @@ export default function ProfilePage() {
           throw new Error('Failed to load statistics.');
         }
 
-        const todos = await response.json();
+        const data = await response.json();
+
+        const todos = Array.isArray(data)
+          ? data
+          : Array.isArray(data.tasks)
+          ? data.tasks
+          : [];
 
         const total = todos.length;
         const completed = todos.filter((t) => t.isCompleted).length;
@@ -54,16 +60,19 @@ export default function ProfilePage() {
   return (
     <div>
       <h2>Your Profile</h2>
-      <p>User: {email}</p>
 
-    {stats && (
-      <>
-        <p>Total: {stats.total}</p>
-        <p>Completed: {stats.completed}</p>
-        <p>Active: {stats.active}</p>
-        <p>Completion: {stats.completion}%</p>
-      </>
-    )}
+      <p>User: {email}</p>
+      <p>Account Status: Authenticated</p>
+
+      {stats && (
+        <>
+          <h3>Todo Statistics</h3>
+          <p>Total: {stats.total}</p>
+          <p>Completed: {stats.completed}</p>
+          <p>Active: {stats.active}</p>
+          <p>Completion: {stats.completion}%</p>
+        </>
+      )}
     </div>
   );
 }

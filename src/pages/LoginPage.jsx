@@ -17,7 +17,7 @@ export default function LoginPage() {
     if (isAuthenticated) {
       navigate(from, { replace: true });
     }
-  }, [isAuthenticated, navigate, from, location.state]);
+  }, [isAuthenticated, navigate, from]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -29,8 +29,6 @@ export default function LoginPage() {
       setError(result.error);
       return;
     }
-
-    navigate(from, { replace: true });
   }
 
   return (

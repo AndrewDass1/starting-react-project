@@ -9,7 +9,8 @@ export default function StatusFilter() {
     const newStatus = event.target.value;
 
     if (newStatus === 'all') {
-      setSearchParams({});
+      searchParams.delete('status');
+      setSearchParams(searchParams);
     } else {
       setSearchParams({ status: newStatus });
     }
