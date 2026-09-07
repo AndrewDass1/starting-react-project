@@ -7,14 +7,14 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const from = location.state?.from?.pathname || '/todos';
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const from = location.state?.from?.pathname || '/todos';
-
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
     setError('');
 
     const result = await login(email, password);
@@ -30,33 +30,11 @@ export default function LoginPage() {
   return (
     <div>
       <h2>Login</h2>
-
       {error && <p>{error}</p>}
-
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="username"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-          />
-        </div>
-
-        <button type="submit">Log In</button>
+        <input value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button>Log In</button>
       </form>
     </div>
   );

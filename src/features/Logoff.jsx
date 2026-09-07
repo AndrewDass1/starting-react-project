@@ -1,11 +1,15 @@
+// Logoff.jsx
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { useNavigate } from 'react-router';
 
 export default function Logoff() {
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
-  return (
-    <button type="button" onClick={logout}>
-      Logout
-    </button>
-  );
+  async function handleLogout() {
+    await logout();
+    navigate('/login', { replace: true });
+  }
+
+  return <button onClick={handleLogout}>Logout</button>;
 }
