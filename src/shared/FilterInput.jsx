@@ -1,4 +1,3 @@
-// shared/FilterInput.jsx
 export default function FilterInput({ filterTerm, onFilterChange }) {
   return (
     <div>
@@ -13,4 +12,3 @@ export default function FilterInput({ filterTerm, onFilterChange }) {
     </div>
   );
 }
-
