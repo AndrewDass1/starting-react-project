@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function ProfilePage() {
-  const { isAuthenticated, token } = useAuth();
+  const { isAuthenticated, token, user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -10,7 +10,7 @@ export default function ProfilePage() {
   useEffect(() => {
     async function loadStats() {
       try {
-        const response = await fetch('/api/todos', {
+        const response = await fetch('/api/tasks', {
           headers: { 'X-CSRF-TOKEN': token },
           credentials: 'include',
         });
@@ -19,10 +19,10 @@ export default function ProfilePage() {
           throw new Error('Failed to load statistics');
         }
 
-        const todos = await response.json();
+        const tasks = await response.json();
 
-        const total = todos.length;
-        const completed = todos.filter((t) => t.isCompleted).length;
+        const total = tasks.length;
+        const completed = tasks.filter((t) => t.isCompleted).length;
         const active = total - completed;
         const completion =
           total === 0 ? 0 : Math.round((completed / total) * 100);
@@ -43,8 +43,13 @@ export default function ProfilePage() {
     }
   }, [isAuthenticated, token]);
 
-  if (loading) return <p>Loading profile...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) {
+    return <p>Loading profile and statistics...</p>;
+  }
+
+  if (error) {
+    return <p>Error loading statistics: {error}</p>;
+  }
 
   if (!isAuthenticated) {
     return <p>You are not logged in.</p>;
@@ -53,12 +58,20 @@ export default function ProfilePage() {
   return (
     <div>
       <h2>Your Profile</h2>
-      <p>Authenticated: yes</p>
-      <p>Total todos: {stats.total}</p>
+      <p>User: {user?.name ?? 'Unknown user'}</p>
+      <p>Token: {token ? 'Present' : 'Missing'}</p>
+
+      <h3>Todo Statistics</h3>
+      <p>Total tasks: {stats.total}</p>
       <p>Completed: {stats.completed}</p>
       <p>Active: {stats.active}</p>
       <p>Completion: {stats.completion}%</p>
-      <p>Status: {stats.completion === 100 ? 'All done!' : 'Keep going!'}</p>
+      <p>
+        Status:{' '}
+        {stats.completion === 100
+          ? 'All tasks completed!'
+          : 'You still have work to do.'}
+      </p>
     </div>
   );
 }
