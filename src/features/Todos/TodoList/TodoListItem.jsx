@@ -1,4 +1,3 @@
-// features/Todos/TodoList/TodoListItem.jsx
 import { useState, useEffect } from 'react';
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
@@ -7,7 +6,6 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
 
-  // Keep local state synced with external updates
   useEffect(() => {
     setWorkingTitle(todo.title);
   }, [todo.title]);

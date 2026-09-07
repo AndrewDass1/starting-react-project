@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 
 import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
@@ -33,9 +33,6 @@ export default function TodosPage() {
     return new Error(`Unable to ${action}. Please try again.`);
   }
 
-  // ---------------------------
-  // FETCH TODOS
-  // ---------------------------
   useEffect(() => {
     if (!token) return;
 
@@ -88,9 +85,6 @@ export default function TodosPage() {
     fetchTodos();
   }, [token, sortBy, sortDirection, debounced]);
 
-  // ---------------------------
-  // ADD TODO
-  // ---------------------------
   async function addTodo(todoTitle) {
     const tempId = Date.now();
 
@@ -135,9 +129,6 @@ export default function TodosPage() {
     }
   }
 
-  // ---------------------------
-  // COMPLETE TODO
-  // ---------------------------
   async function completeTodo(id) {
     const originalTodo = todoList.find((t) => t.id === id);
     if (!originalTodo) {
@@ -182,9 +173,6 @@ export default function TodosPage() {
     }
   }
 
-  // ---------------------------
-  // UPDATE TODO
-  // ---------------------------
   async function updateTodo(id, newTitle) {
     const originalTodo = todoList.find((t) => t.id === id);
 
@@ -235,9 +223,6 @@ export default function TodosPage() {
     }
   }
 
-  // ---------------------------
-  // SORT + FILTER
-  // ---------------------------
   function handleSortByChange(newSortBy) {
     dispatch({
       type: TODO_ACTIONS.SET_SORT,
