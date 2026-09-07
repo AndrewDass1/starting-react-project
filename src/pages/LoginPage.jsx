@@ -15,9 +15,9 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/todos', { replace: true });
+      navigate(from, { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, from]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -36,26 +36,8 @@ export default function LoginPage() {
   return (
     <div>
       <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
+      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-          />
-        </div>
-        <button type="submit">Log In</button>
       </form>
     </div>
   );
