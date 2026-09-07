@@ -55,23 +55,15 @@ export default function ProfilePage() {
     <div>
       <h2>Your Profile</h2>
       <p>User: {email}</p>
-      <p>Token: {token ? 'Present' : 'Missing'}</p>
 
-      {stats && (
-        <>
-          <h3>Todo Statistics</h3>
-          <p>Total todos: {stats.total}</p>
-          <p>Completed: {stats.completed}</p>
-          <p>Active: {stats.active}</p>
-          <p>Completion: {stats.completion}%</p>
-          <p>
-            Status:{' '}
-            {stats.completion === 100
-              ? 'All todos completed!'
-              : 'You still have todos to finish.'}
-          </p>
-        </>
-      )}
+    {stats && (
+      <>
+        <p>Total: {stats.total}</p>
+        <p>Completed: {stats.completed}</p>
+        <p>Active: {stats.active}</p>
+        <p>Completion: {stats.completion}%</p>
+      </>
+    )}
     </div>
   );
 }

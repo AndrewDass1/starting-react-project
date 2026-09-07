@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (isAuthenticated && location.state?.from) {
+    if (isAuthenticated) {
       navigate(from, { replace: true });
     }
   }, [isAuthenticated, navigate, from, location.state]);
