@@ -41,11 +41,11 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             />
 
             <button type="button" onClick={handleCancel}>
-              Cancel
+              CANCEL
             </button>
 
             <button type="submit" disabled={!isValidTodoTitle(workingTitle)}>
-              Update
+              UPDATE
             </button>
           </>
         ) : (

@@ -18,11 +18,11 @@ export default function StatusFilter() {
 
   return (
     <div>
-      <label htmlFor="statusFilter">Show:</label>
+      <label htmlFor="statusFilter">SHOW:</label>
       <select id="statusFilter" value={status} onChange={handleChange}>
-        <option value="all">All</option>
-        <option value="active">Active</option>
-        <option value="completed">Completed</option>
+        <option value="all">ALL</option>
+        <option value="active">ACTIVE</option>
+        <option value="completed">COMPLETED</option>
       </select>
     </div>
   );

@@ -6,30 +6,25 @@ export default function NotFoundPage() {
 
   return (
     <div>
-      <h2>Page Not Found</h2>
-      <p>The page you are looking for does not exist.</p>
-      <p>Try one of these:</p>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+      <h2>PAGE NOT FOUND</h2>
+      <p>THE PAGE YOU ARE LOOKING FOR DOES NOT EXIST. TRY ONE OF THESE:</p>
+      
+        <Link to="/">HOME</Link>
+        <br></br>
+        
+        <Link to="/about">ABOUT</Link>
+        <br></br>
+        
+        <Link to="/login">LOGIN</Link>
+        <br></br>
+
         {isAuthenticated && (
           <>
-            <li>
               <Link to="/todos">Todos</Link>
-            </li>
-            <li>
               <Link to="/profile">Profile</Link>
-            </li>
           </>
         )}
-      </ul>
+      
     </div>
   );
 }

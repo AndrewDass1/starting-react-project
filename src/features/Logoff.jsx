@@ -26,8 +26,9 @@ export default function Logoff() {
 
   return (
     <div>
+      <br></br>
       <button onClick={handleLogout} disabled={loading}>
-        {loading ? 'Logging out...' : 'Logout'}
+        {loading ? 'LOGGING OUT...' : 'LOGOUT'}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
