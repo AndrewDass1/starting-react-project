@@ -154,7 +154,7 @@ export default function TodosPage() {
 
   return (
     <div>
-      <h2>Your Todos</h2>
+      <h2>YOUR TODOS</h2>
 
       <SortBy
         sortBy={sortBy}
@@ -173,6 +173,9 @@ export default function TodosPage() {
         todoList={state.todoList || []}
         dataVersion={state.dataVersion}
         statusFilter={statusFilter}
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        filterTerm={filterTerm}
         onUpdateTodo={updateTodo}
         onCompleteTodo={completeTodo}
       />

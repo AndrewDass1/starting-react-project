@@ -27,7 +27,7 @@ function TodoForm({ onAddTodo }) {
       />
 
       <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)}>
-        Add Todo
+        ADD TODO
       </button>
     </form>
   );

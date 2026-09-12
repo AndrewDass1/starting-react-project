@@ -59,18 +59,18 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <h2>Your Profile</h2>
+      <h2>YOUR PROFILE</h2>
 
-      <p>User: {email}</p>
-      <p>Account Status: Authenticated</p>
+      <p>USER: {email}</p>
+      <p>ACCOUNT STATUS: Authenticated</p>
 
       {stats && (
         <>
-          <h3>Todo Statistics</h3>
-          <p>Total: {stats.total}</p>
-          <p>Completed: {stats.completed}</p>
-          <p>Active: {stats.active}</p>
-          <p>Completion: {stats.completion}%</p>
+          <h3>TODO STATISTICS</h3>
+          <p>TOTAL: {stats.total}</p>
+          <p>COMPLETED: {stats.completed}</p>
+          <p>ACTIVE: {stats.active}</p>
+          <p>COMPLETION: {stats.completion}%</p>
         </>
       )}
     </div>

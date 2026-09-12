@@ -14,5 +14,5 @@ export default function HomePage() {
     }
   }, [isAuthenticated, navigate]);
 
-  return <p>Redirecting...</p>;
+  return <p>REDIRECTING...</p>;
 }

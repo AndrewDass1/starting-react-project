@@ -12,10 +12,12 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 
 import RequireAuth from './components/RequireAuth.jsx';
 
+import './app.css';
+
 function App() {
   return (
     <div>
-      <Header />
+      <center> <Header /> </center>
 
       <Routes>
         <Route path="/" element={<HomePage />} />
