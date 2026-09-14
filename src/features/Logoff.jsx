@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router';
 
+import button from '../button.module.css';
+
 export default function Logoff() {
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ export default function Logoff() {
   return (
     <div>
       <br></br>
-      <button onClick={handleLogout} disabled={loading}>
+      <button onClick={handleLogout} disabled={loading} className={button.button}>
         {loading ? 'LOGGING OUT...' : 'LOGOUT'}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}

@@ -12,7 +12,7 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 
 import RequireAuth from './components/RequireAuth.jsx';
 
-import './app.css';
+import './body.module.css';
 
 function App() {
   return (

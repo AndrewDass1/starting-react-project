@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
 
+import button from '../../../button.module.css';
+
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
@@ -40,11 +42,11 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               onChange={handleEdit}
             />
 
-            <button type="button" onClick={handleCancel}>
+            <button type="button" onClick={handleCancel} className={button.button}>
               CANCEL
             </button>
 
-            <button type="submit" disabled={!isValidTodoTitle(workingTitle)}>
+            <button type="submit" disabled={!isValidTodoTitle(workingTitle)} className={button.button}>
               UPDATE
             </button>
           </>
@@ -57,7 +59,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               onChange={() => onCompleteTodo(todo.id)}
             />
 
-            <button type="button" onClick={() => setIsEditing(true)}>
+            <button type="button" onClick={() => setIsEditing(true)} className={button.button}>
               {todo.title}
             </button>
           </>
