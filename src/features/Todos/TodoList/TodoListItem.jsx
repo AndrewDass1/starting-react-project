@@ -3,6 +3,7 @@ import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
 
 import button from '../../../button.module.css';
+import todolistitem from '../../../todolistitem.module.css';
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -53,7 +54,8 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
         ) : (
           <>
             <input
-              type="checkbox"
+              type="checkbox" 
+              className={todolistitem.checkmark}
               id={`checkbox${todo.id}`}
               checked={todo.isCompleted}
               onChange={() => onCompleteTodo(todo.id)}
