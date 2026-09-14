@@ -18,8 +18,9 @@ The todo app is capable of sorting its items by doing the following:
 * CSS
 
 ## Getting Started
+To get started running this application, the sections below "Available Scripts" explains what additional files was added to the basic React.js template to make this application functional, and "Downloading this Repository's Files" explains how to download this entire repository's files and code in order to run it.  
 
-### Available Scripts
+## Available Scripts
 In this repository, the basic files from running the React commands to download the basic template of React, is used to run this application. Furthermore, additional files or scripts have been added in the src folder. Within the src folder, there are more added folders: components, contexts, features, pages, reducers, shared, and utils. 
 <br> <br>
 In the components and contexts folders have the RequireAuth.jsx and AuthContext.jsx files respectively, and they are used to provide authenciation when a user signs in into the todo app.   
@@ -31,7 +32,7 @@ The pages directory has more .jsx files that displays to the HTML todo applicati
 
 When the user logs into the application, their todolist is now shown and this is displayed from the "TodosPage.jsx". The header now shows: "HOME", "ABOUT", "TODOS", or "PROFILE". When the "HOME" link is now clicked, it also now shows this todolist page as well. The "ABOUT" page still shows a description of the application and how to use it and the "PROFILE" page shows percentage statistics of completed and uncompleted items to the total items on the list. There is also a "Logout" button at the top to sign out when the user is finished using the todo app.
 
-### Downloading this Repository's Files
+## Downloading this Repository's Files
 To replicate this project on your local machine, have the npm package installed already, which can be downloaded from the Node.js website (1). There are also specific instructions to download Node.js for each operating system. The files code in this directory has been modified to display a To-Do app instead of showing the standard React and Vite documentation. 
 
 To run the files from this repository to display the To-Do app, navigate to an empty folder or directory on the local machine and run the following command to first download these files:
@@ -49,7 +50,7 @@ npm install runs all required dependencies to run the source code for the To-Do 
 
 If needed, go to the official React (2) website for further instructions to download React.js.
 
-### Running the Application
+## Running the Application
 After downloading the code it will be asked to run the application after completing installation from running the code in the terminal. If the server is exited after the initial installation, to rerun the program at any time in the terminal, use the following code:
 
 ```
@@ -74,6 +75,9 @@ The todo page can show all the todos that were or are on the list that was or ne
 ### Profile Page
 <img src="./profile.png" />
 This page shows the amount of total items on the list, and the ones that are either completed or need to be completed.
+
+## Live Demo Link
+I created a short video, showing how the application works and it can be accessed through this link: https://youtu.be/10q-GLYtoqI
 
 ## Design Decisions
 This application is meant to have a simple UI, where the user can see and navigate this application easily when they run it. When they first run the application, they are prompted to enter their login credentials. If they want to explore other parts of the website, the header is included at the top to show or navigate through other webpages.
