@@ -17,7 +17,7 @@ import './body.module.css';
 function App() {
   return (
     <div>
-      <center> <Header /> </center>
+      <Header />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
