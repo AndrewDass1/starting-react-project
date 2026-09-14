@@ -7,7 +7,7 @@ export default function SortBy({
   return (
     <div>
       <div>
-        <label htmlFor="sortBy">Sort By:</label>
+        <label htmlFor="sortBy">SORT BY:</label>
         <select
           id="sortBy"
           value={sortBy}
