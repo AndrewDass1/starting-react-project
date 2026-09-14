@@ -76,8 +76,6 @@ The pages directory has more .jsx files that displays to the HTML todo applicati
 
 When the user logs into the application, their todolist is now shown and this is displayed from the "TodosPage.jsx". The header now shows: "HOME", "ABOUT", "TODOS", or "PROFILE". When the "HOME" link is now clicked, it also now shows this todolist page as well. The "ABOUT" page still shows a description of the application and how to use it and the "PROFILE" page shows percentage statistics of completed and uncompleted items to the total items on the list. There is also a "Logout" button at the top to sign out when the user is finished using the todo app.
 
-Once again, to download all these files, its recommended and is more efficent to download the npm software onto a computer and run: `npx create-next-app@latest`. This will give the current directory a basic React.js structure layout to run the React.js framework. 
-
 If the user chooses to download all the files from this directory, then it is recommended to run `npm install` to download the prerequisite packages that was used and customized for this project. If `npm install` was used, then run the `npm build` command to install and run the downloaded software. To run the app, in the web browser, use the command `npm run dev`. For further instructions to run React.js apps, refer to the official React website. 
 
 ## Screenshots
