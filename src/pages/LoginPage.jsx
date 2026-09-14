@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
+import button from '../button.module.css';
+
 export default function LoginPage() {
   const { isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
@@ -59,7 +61,7 @@ export default function LoginPage() {
 
         <br></br>
 
-        <button type="submit">LOG IN</button>
+        <button type="submit" className={button.button}>LOG IN</button>
       </form>
     </div>
   );

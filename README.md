@@ -13,9 +13,19 @@ The todo app is capable of sorting its items by doing the following:
 
 ## Technologies Used
 * JavaScript
-* React.js
+* Git (1)
+* npm - node package manager (2)
+* React.js (3)
+* React.js Libraries:
+    * useState
+    * useRef
+    * useNavigation
+    * useEffect
+    * useLocation
+    * useAuth
+* vite 
 * HTML
-* CSS  
+* CSS
 
 ## Available Scripts
 In this repository, the basic files from running the React commands to download the basic template of React, is used to run this application. Furthermore, additional files or scripts have been added in the src folder. Within the src folder, there are more added folders: components, contexts, features, pages, reducers, shared, and utils. 
@@ -29,10 +39,15 @@ The pages directory has more .jsx files that displays to the HTML todo applicati
 
 When the user logs into the application, their todolist is now shown and this is displayed from the "TodosPage.jsx". The header now shows: "HOME", "ABOUT", "TODOS", or "PROFILE". When the "HOME" link is now clicked, it also now shows this todolist page as well. The "ABOUT" page still shows a description of the application and how to use it and the "PROFILE" page shows percentage statistics of completed and uncompleted items to the total items on the list. There is also a "Logout" button at the top to sign out when the user is finished using the todo app.
 
+<br> <br>
+To download these files, the npm package will be needed. The commands "install" and "run dev" need to be run with npm. 
+
 ## Getting Started
 To get started running this application, this sections explains what additional files was added to the basic React.js template to make this application functional and explains how to download this entire repository's files and code in order to run it.<br> <br>
 
-To replicate this project on your local machine, have the npm package installed already, which can be downloaded from the Node.js website (1). There are also specific instructions to download Node.js for each operating system. The files code in this directory has been modified to display a To-Do app instead of showing the standard React and Vite documentation. 
+First the user must install Git (1), a source code manager. All the files in this repository can be downloaded by using Git commands in the Terminal and to perform Git commands, the software must be installed onto a user's computer. Please go to the git website for further instructions to download it for a specific OS. <br> <br>
+
+To replicate this project on your local machine, have the npm package installed already, which can be downloaded from the Node.js website (2). There are also specific instructions to download Node.js for each operating system. The files' code in this directory has been modified to display a To-Do app instead of showing the standard React and Vite documentation. 
 
 To run the files from this repository to display the To-Do app, navigate to an empty folder or directory on the local machine and run the following command to first download these files:
 
@@ -45,9 +60,9 @@ The command above will download all the files onto a local machine's repository 
 npm install
 ```
 
-npm install runs all required dependencies to run the source code for the To-Do app. 
+npm install runs all required dependencies to run the source code for the To-Do app. The user can press enter for all questions the prompt asks the user to choose from in order to use default settings to run a React.js application.
 
-If needed, go to the official React (2) website for further instructions to download React.js.
+If needed, go to the official React (3) website for further instructions to download React.js.
 
 After downloading the code it will be asked to run the application after completing installation from running the code in the terminal. If the server is exited after the initial installation, to rerun the program at any time in the terminal, use the following code:
 
@@ -74,11 +89,11 @@ The todo page can show all the todos that were or are on the list that was or ne
 <img src="./profile.png" />
 This page shows the amount of total items on the list, and the ones that are either completed or need to be completed.
 
-## Live Demo Link
+## Access Recorded Demo Link
 I created a short video titled "Andrew Dass To-Do Application.mp4" that is in this repository showing how the application works. This video can also be accessed through this link: https://youtu.be/10q-GLYtoqI
 
 ## Design Decisions
-This application is meant to have a simple UI, where the user can see and navigate this application easily when they run it. When they first run the application, they are prompted to enter their login credentials. If they want to explore other parts of the website, the header is included at the top to show or navigate through other webpages.
+This application is meant to have a simple UI, where the user can see and navigate this application easily when they run it. When they first run the application, they are prompted to enter their login credentials. If they want to explore other parts of the website, the header is included at the top to show or navigate through other webpages. I customized the background to be a light green color, and the text's font and color is changed to Arial and gray respectively. The buttons on the website have also changed, where the font color is purple, the background of the button is lightblue and the button's text is also Arial. If the user hovers the mouse over the button, the button's background color changes to a light yellow.  
 
 ## Future Improvements
 Improvements that can be done to this app, is, next time, I'll implement more features such as displaying the time and date of when a particular todo item was added to the list. Also, when an item is checked marked, I would implement for it to be unchecked and if an item needs to be removed or deleted, I would implement that as well. 
@@ -90,9 +105,13 @@ Below is my LinkedIn, if you want to contact me:
 https://www.linkedin.com/in/andrewdass/
 
 ## Sources
-https://nodejs.org/en/download (1)
+https://git-scm.com/ (1)
 
-https://react.dev/learn/installation (2)
+https://nodejs.org/en/download (2)
+
+https://react.dev/learn/installation (3)
+
 
 ## License Information
-This the license information that I followed when downloading and using React.js for my application: https://github.com/react/react/blob/main/LICENSE (3)
+SPDX-License-Identifier: MIT  <br>
+Source: https://github.com/react/react/blob/main/LICENSE (3)

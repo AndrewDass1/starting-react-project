@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
-import '.././navigation.css';
+// import '.././navigation.css';
 
 function navLinkStyle({ isActive }) {
   return {
