@@ -1,4 +1,3 @@
-// App.jsx
 import { Routes, Route } from 'react-router';
 
 import Header from './shared/Header.jsx';
