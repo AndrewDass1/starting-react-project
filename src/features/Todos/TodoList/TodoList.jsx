@@ -1,70 +1,72 @@
 import { useMemo } from 'react';
-import TodoListItem from './TodoListItem.jsx';
 
 export default function TodoList({
   todoList,
   dataVersion,
   statusFilter,
-  filterTerm,
   sortBy,
   sortDirection,
+  filterTerm,
   onUpdateTodo,
   onCompleteTodo,
 }) {
-  const safeList = Array.isArray(todoList) ? todoList : [];
+  const filteredAndSortedTodos = useMemo(() => {
+    const safeList = Array.isArray(todoList) ? todoList : [];
 
-  const filteredTodos = useMemo(() => {
-    let list = [...safeList];
+    const byStatus = safeList.filter((t) => {
+      if (statusFilter === 'active') return !t.isCompleted;
+      if (statusFilter === 'completed') return t.isCompleted;
+      return true;
+    });
 
-    if (statusFilter === 'active') {
-      list = list.filter((todo) => !todo.isCompleted);
-    } else if (statusFilter === 'completed') {
-      list = list.filter((todo) => todo.isCompleted);
-    }
+    const byFilterTerm = byStatus.filter((t) => {
+      if (!filterTerm.trim()) return true;
+      return t.title.toLowerCase().includes(filterTerm.toLowerCase());
+    });
 
-    if (filterTerm && filterTerm.trim() !== '') {
-      const term = filterTerm.toLowerCase();
-      list = list.filter((todo) =>
-        todo.title.toLowerCase().includes(term)
-      );
-    }
-
-    list.sort((a, b) => {
-      let valueA = a[sortBy];
-      let valueB = b[sortBy];
-
+    const sorted = [...byFilterTerm].sort((a, b) => {
       if (sortBy === 'createdAt') {
-        valueA = new Date(valueA);
-        valueB = new Date(valueB);
+        const aTime = new Date(a.createdAt).getTime();
+        const bTime = new Date(b.createdAt).getTime();
+        return sortDirection === 'asc' ? aTime - bTime : bTime - aTime;
       }
 
-      if (valueA < valueB) return sortDirection === 'asc' ? -1 : 1;
-      if (valueA > valueB) return sortDirection === 'asc' ? 1 : -1;
+      if (sortBy === 'title') {
+        const aTitle = a.title.toLowerCase();
+        const bTitle = b.title.toLowerCase();
+        if (aTitle < bTitle) return sortDirection === 'asc' ? -1 : 1;
+        if (aTitle > bTitle) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
+      }
+
       return 0;
     });
 
-    return list;
-  }, [safeList, statusFilter, filterTerm, sortBy, sortDirection]);
+    return sorted;
+  }, [todoList, statusFilter, sortBy, sortDirection, filterTerm]);
 
-  if (filteredTodos.length === 0) {
-    if (statusFilter === 'active') {
-      return <p>You have no active todos. Nice work!</p>;
-    }
-    if (statusFilter === 'completed') {
-      return <p>No todos have been completed yet.</p>;
-    }
-    return <p>You don’t have any todos yet. Add one to get started.</p>;
+  if (!filteredAndSortedTodos.length) {
+    return <p>No todos found.</p>;
   }
 
   return (
     <ul>
-      {filteredTodos.map((todo) => (
-        <TodoListItem
-          key={`${dataVersion}-${todo.id}`}
-          todo={todo}
-          onCompleteTodo={onCompleteTodo}
-          onUpdateTodo={onUpdateTodo}
-        />
+      {filteredAndSortedTodos.map((todo) => (
+        <li key={`${todo.id}-${dataVersion}`}>
+          <span>
+            {todo.title} {todo.isCompleted ? '(completed)' : ''}
+          </span>
+          {!todo.isCompleted && (
+            <button onClick={() => onCompleteTodo(todo.id)}>Complete</button>
+          )}
+          <button
+            onClick={() =>
+              onUpdateTodo(todo.id, prompt('Update title', todo.title) || todo.title)
+            }
+          >
+            Edit
+          </button>
+        </li>
       ))}
     </ul>
   );
