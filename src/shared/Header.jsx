@@ -1,20 +1,24 @@
 import Navigation from './Navigation.jsx';
-import Logoff from '../features/Logoff.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
-
-import '../header.module.css';
+import Logoff from '../features/Logoff.jsx';
+import styles from '../header.module.css';
 
 export default function Header() {
   const { isAuthenticated } = useAuth();
 
   return (
     <>
-      <h1>TODO APP</h1>
+      <h1 className={styles.appTitle}>TODO APP</h1>
 
-      <header>
+      <header className={styles.headerContainer}>
         <Navigation />
-        {isAuthenticated && <Logoff />}
       </header>
+
+      {isAuthenticated && (
+        <div className={styles.logoutContainer}>
+          <Logoff />
+        </div>
+      )}
     </>
   );
 }

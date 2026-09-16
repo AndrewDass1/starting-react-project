@@ -17,8 +17,7 @@ const TextInputWithLabel = forwardRef(function TextInputWithLabel(
   return (
     <div>
       <label htmlFor={elementId}>
-        {labelText}
-        {required && ' *'}:
+        {labelText}:
       </label>
       <input
         id={elementId}

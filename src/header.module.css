@@ -1,12 +1,17 @@
-h1 {
+.appTitle {
     text-align: center;
+    margin-bottom: 1rem;
+}
+
+.headerContainer {
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-header {
-    text-align: center;
+.logoutContainer {
+    display: flex;
     justify-content: center;
-    align-items: center;
+    margin-top: 0.75rem;
 }
 

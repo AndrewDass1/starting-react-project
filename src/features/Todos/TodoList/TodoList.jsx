@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import TodoListItem from './TodoListItem.jsx';
 
 export default function TodoList({
   todoList,
@@ -9,6 +10,7 @@ export default function TodoList({
   filterTerm,
   onUpdateTodo,
   onCompleteTodo,
+  onUncompleteTodo,
 }) {
   const filteredAndSortedTodos = useMemo(() => {
     const safeList = Array.isArray(todoList) ? todoList : [];
@@ -50,23 +52,15 @@ export default function TodoList({
   }
 
   return (
-    <ul>
+    <ul style={{ paddingLeft: 0 }}>
       {filteredAndSortedTodos.map((todo) => (
-        <li key={`${todo.id}-${dataVersion}`}>
-          <span>
-            {todo.title} {todo.isCompleted ? '(completed)' : ''}
-          </span>
-          {!todo.isCompleted && (
-            <button onClick={() => onCompleteTodo(todo.id)}>Complete</button>
-          )}
-          <button
-            onClick={() =>
-              onUpdateTodo(todo.id, prompt('Update title', todo.title) || todo.title)
-            }
-          >
-            Edit
-          </button>
-        </li>
+        <TodoListItem
+          key={`${todo.id}-${dataVersion}`}
+          todo={todo}
+          onUpdateTodo={onUpdateTodo}
+          onCompleteTodo={onCompleteTodo}
+          onUncompleteTodo={onUncompleteTodo}
+        />
       ))}
     </ul>
   );

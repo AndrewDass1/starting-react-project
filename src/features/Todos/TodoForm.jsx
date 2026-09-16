@@ -1,38 +1,51 @@
-import { useRef, useState } from 'react';
-import TextInputWithLabel from '../../shared/TextInputWithLabel.jsx'
+import { useState } from 'react';
+import TextInputWithLabel from '../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../utils/todoValidation.js';
 
-import button from '../../button.module.css';
+export default function TodoForm({ onAddTodo }) {
+  const [title, setTitle] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-function TodoForm({ onAddTodo }) {
-  const inputRef = useRef();
-  const [workingTodoTitle, setWorkingTodoTitle] = useState('');
+  function handleChange(e) {
+    const newTitle = e.target.value;
+    setTitle(newTitle);
 
-  function handleAddTodo(event) {
-    event.preventDefault();
-
-    if (!isValidTodoTitle(workingTodoTitle)) return;
-
-    onAddTodo(workingTodoTitle);
-    setWorkingTodoTitle('');
-    inputRef.current?.focus();
+    const { valid, error } = isValidTodoTitle(newTitle);
+    setErrorMessage(valid ? '' : error);
   }
 
-  return (
-    <form onSubmit={handleAddTodo}>
-      <TextInputWithLabel
-        ref={inputRef}
-        value={workingTodoTitle}
-        onChange={(event) => setWorkingTodoTitle(event.target.value)}
-        elementId="todoTitle"
-        labelText="TODO"
-      />
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-      <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)} className={button.button}>
+    const { valid, error } = isValidTodoTitle(title);
+    if (!valid) {
+      setErrorMessage(error);
+      return;
+    }
+
+    await onAddTodo(title.trim());
+    setTitle('');
+    setErrorMessage('');
+  }
+
+  const { valid } = isValidTodoTitle(title);
+  const isDisabled = !valid;
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <TextInputWithLabel
+        value={title}
+        onChange={handleChange}
+        elementId="newTodoTitle"
+        labelText="NEW TODO"
+        required={true}
+        maxLength={50}
+        errorMessage={errorMessage}
+        placeholder="Enter a todo title..."
+      />
+      <button type="submit" disabled={isDisabled}>
         ADD TODO
       </button>
     </form>
   );
 }
-
-export default TodoForm;
