@@ -59,9 +59,7 @@ First the user must install Git (1), a source code manager. All the files in thi
 
 To replicate this project on your local machine, have the npm package installed already, which can be downloaded from the Node.js website (2). There are also specific instructions to download Node.js for each operating system. The files' code in this directory has been modified to display a To-Do app instead of showing the standard React and Vite documentation. 
 
-To download and run these files, the npm package will be needed to structure the files in the correct places and to also download existing dependecies. The commands "install" and "run dev" need to be run with npm. (4)
-<br>
-The first command that can be used is "npx create-next-app@latest". This will install React.js in a directory. The files that come with this are a configured index.html, package-lock.json, package.json, a "node_modules", "public" and "src" directories. <br> <br>
+To download and run these files, the npm package will be needed to structure the files in the correct places and to also download existing dependecies. The commands "install" and "run dev" need to be run with npm (4). The files that come with this are a configured index.html, package-lock.json, package.json, a "node_modules", "public" and "src" directories. <br> <br>
 
 Since this repository already has React.js files and dependencies installed, to run these exact same files from this repository and to display the To-Do app, navigate to an empty folder or directory on the local machine and run the following command to first download these files:
 
@@ -88,19 +86,19 @@ After downloading the code it will be asked to run the application after complet
 npm run dev
 ```
 
-If the user chooses to download all the files from this directory, then it is recommended to run `npm install` to download the prerequisite packages that was used and customized for this project. If `npm install` was used, then run the `npm build` command to install and run the downloaded software. To run the app, in the web browser, use the command `npm run dev`. For further instructions to run React.js apps, refer to the official React website.
+If the user chooses to download all the files from this directory, then it is recommended to run `npm install` to download the prerequisite packages that was used and customized for this project. If `npm install` was used, then run the `npm build` command to install and run the downloaded software. To run the app, in the web browser, use the command `npm run dev`. For further instructions to run React.js apps, refer to the official React website. <br> <br>
 
-In this repository, the basic files from running the React commands to download the basic template of React, is used to run this application. Furthermore, additional files or scripts have been added in the src folder. Within the src folder, there are more added folders: components, contexts, features, pages, reducers, shared, and utils. 
-<br> <br>
-In the components and contexts folders have the RequireAuth.jsx and AuthContext.jsx files respectively, and they are used to provide authenciation when a user signs in into the todo app.   
-<br> <br>
-The features directory has the Logoff.jsx, where that file implements a "Logout" button on the website for when the user wants to log out of their todo list when finished. There is a "Todos" directory that has TodoForm.jsx and a "TodoList" directory. The TodoForm.jsx receives components from other files, including TextInputWithLabel.jsx and todoValidation.js to display a function todo form for users to interact with. In the TodoList directory, has files "TodoListItem.jsx" and "TodoList.jsx". "TodoListItem.jsx" adds items and sends it over to "TodoList.jsx".
-<br> <br>
-The pages directory has more .jsx files that displays to the HTML todo application's UI: "AboutPage.jsx", "HomePage.jsx", "LoginPage.jsx", "NotFoundPage.jsx", "ProfilePage.jsx" and "TodosPage.jsx". When first opening the website, the user is automatically directed to the homepage, which is the "HomePage.jsx". The "LoginPage.jsx" is structured the sameway as "HomePage.jsx". The "AboutPage.jsx" shows a description of this application and how to use it. These pages can be accessed through the header links by either clicking "HOME", "ABOUT" or "LOGIN" for which page the user wants.
-<br> <br>
+It is also possible to modify the downloading commands and instructions. In this application, the "package.json" has modified the dev, build, and preview commands. Since vite.js is used in this application, run "vite" to run the development of this application, "vite build" to build the application, and "vite preview" to preview the application during the building and finishing stages. <br> <br>
+
+In this repository, the basic files from running the React commands to download the basic template of React, is used to run this application. Furthermore, additional files or scripts have been added in the src folder. Within the src folder, there are more added folders: components, contexts, features, pages, reducers, shared, and utils. <br> <br>
+
+In the components and contexts folders have the RequireAuth.jsx and AuthContext.jsx files respectively, and they are used to provide authenciation when a user signs in into the todo app. <br> <br>
+
+The features directory has the Logoff.jsx, where that file implements a "Logout" button on the website for when the user wants to log out of their todo list when finished. There is a "Todos" directory that has TodoForm.jsx and a "TodoList" directory. The TodoForm.jsx receives components from other files, including TextInputWithLabel.jsx and todoValidation.js to display a function todo form for users to interact with. In the TodoList directory, has files "TodoListItem.jsx" and "TodoList.jsx". "TodoListItem.jsx" adds items and sends it over to "TodoList.jsx". <br> <br>
+
+The pages directory has more .jsx files that displays to the HTML todo application's UI: "AboutPage.jsx", "HomePage.jsx", "LoginPage.jsx", "NotFoundPage.jsx", "ProfilePage.jsx" and "TodosPage.jsx". When first opening the website, the user is automatically directed to the homepage, which is the "HomePage.jsx". The "LoginPage.jsx" is structured the sameway as "HomePage.jsx". The "AboutPage.jsx" shows a description of this application and how to use it. These pages can be accessed through the header links by either clicking "HOME", "ABOUT" or "LOGIN" for which page the user wants. <br> <br>
 
 When the user logs into the application, their todolist is now shown and this is displayed from the "TodosPage.jsx". The header now shows: "HOME", "ABOUT", "TODOS", or "PROFILE". When the "HOME" link is now clicked, it also now shows this todolist page as well. The "ABOUT" page still shows a description of the application and how to use it and the "PROFILE" page shows percentage statistics of completed and uncompleted items to the total items on the list. There is also a "Logout" button at the top to sign out when the user is finished using the todo app. 
-
 
 ## Design Decisions
 This application is meant to have a simple UI, where the user can see and navigate this application easily when they run it. When they first run the application, they are prompted to enter their login credentials. If they want to explore other parts of the website, the header is included at the top to show or navigate through other webpages. I customized the background to be a light green color, and the text's font and color is changed to Arial and gray respectively. The buttons on the website have also changed, where the font color is purple, the background of the button is lightblue and the button's text is also Arial. If the user hovers the mouse over the button, the button's background color changes to a light yellow. The checkbox size has been edited so it appears bigger length-wise than usual. 
