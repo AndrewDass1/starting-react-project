@@ -11,3 +11,4 @@ export function isValidTodoTitle(title) {
 
   return { valid: true, error: '' };
 }
+

@@ -1,74 +1,102 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
 
-import button from '../../../button.module.css';
-import todolistitem from '../../../todolistitem.module.css';
-
-function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
+export default function TodoListItem({
+  todo,
+  onUpdateTodo,
+  onCompleteTodo,
+  onUncompleteTodo,
+}) {
   const [isEditing, setIsEditing] = useState(false);
-  const [workingTitle, setWorkingTitle] = useState(todo.title);
+  const [title, setTitle] = useState(todo.title);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
-    setWorkingTitle(todo.title);
-  }, [todo.title]);
+  const smallButtonStyle = {
+    marginLeft: '0.5rem',
+    padding: '0.15rem 0.35rem',
+    fontSize: '0.75rem',
+    cursor: 'pointer',
+  };
+
+  function handleStartEdit() {
+    setIsEditing(true);
+    setTitle(todo.title);
+    setErrorMessage('');
+  }
+
+  function handleChange(e) {
+    const newTitle = e.target.value;
+    setTitle(newTitle);
+
+    const { valid, error } = isValidTodoTitle(newTitle);
+    setErrorMessage(valid ? '' : error);
+  }
+
+  async function handleSave() {
+    const { valid, error } = isValidTodoTitle(title);
+    if (!valid) {
+      setErrorMessage(error);
+      return;
+    }
+
+    await onUpdateTodo(todo.id, title.trim());
+    setIsEditing(false);
+  }
 
   function handleCancel() {
-    setWorkingTitle(todo.title);
     setIsEditing(false);
+    setTitle(todo.title);
+    setErrorMessage('');
   }
 
-  function handleEdit(event) {
-    setWorkingTitle(event.target.value);
+  function handleCheckbox(e) {
+    if (e.target.checked) {
+      onCompleteTodo(todo.id);
+    } else {
+      onUncompleteTodo(todo.id);
+    }
   }
 
-  function handleUpdate(event) {
-    event.preventDefault();
-    if (!isEditing) return;
-    if (!isValidTodoTitle(workingTitle)) return;
-
-    onUpdateTodo(todo.id, workingTitle);
-    setIsEditing(false);
-  }
+  const { valid } = isValidTodoTitle(title);
+  const isSaveDisabled = !valid;
 
   return (
-    <li>
-      <form onSubmit={handleUpdate}>
-        {isEditing ? (
-          <>
-            <TextInputWithLabel
-              value={workingTitle}
-              elementId={`todo-${todo.id}`}
-              labelText="Todo"
-              onChange={handleEdit}
-            />
+    <li style={{ marginBottom: '0.75rem' }}>
+      {isEditing ? (
+        <>
+          <TextInputWithLabel
+            value={title}
+            onChange={handleChange}
+            elementId={`todo-${todo.id}`}
+            labelText="TITLE"
+            required={true}
+            maxLength={50}
+            errorMessage={errorMessage}
+          />
 
-            <button type="button" onClick={handleCancel} className={button.button}>
-              CANCEL
-            </button>
+          <button onClick={handleSave} disabled={isSaveDisabled} style={smallButtonStyle}>
+            SAVE
+          </button>
 
-            <button type="submit" disabled={!isValidTodoTitle(workingTitle)} className={button.button}>
-              UPDATE
-            </button>
-          </>
-        ) : (
-          <>
-            <input
-              type="checkbox" 
-              className={todolistitem.checkmark}
-              id={`checkbox${todo.id}`}
-              checked={todo.isCompleted}
-              onChange={() => onCompleteTodo(todo.id)}
-            />
+          <button onClick={handleCancel} style={smallButtonStyle}>CANCEL</button>
+        </>
+      ) : (
+        <>
+          <input
+            type="checkbox"
+            checked={todo.isCompleted}
+            onChange={handleCheckbox}
+            style={{ marginRight: '0.5rem' }}
+          />
 
-            <button type="button" onClick={() => setIsEditing(true)} className={button.button}>
-              {todo.title}
-            </button>
-          </>
-        )}
-      </form>
+          <span style={{ marginRight: '1rem' }}>
+            {todo.title}
+          </span>
+
+          <button onClick={handleStartEdit} style={smallButtonStyle}>EDIT</button>
+        </>
+      )}
     </li>
   );
 }
-
-export default TodoListItem;
