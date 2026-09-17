@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
+import { sanitizeText } from '../../../utils/sanitize.js';
 
 export default function TodoListItem({
   todo,
@@ -40,7 +41,7 @@ export default function TodoListItem({
       return;
     }
 
-    await onUpdateTodo(todo.id, title.trim());
+    await onUpdateTodo(todo.id, sanitizeText(title.trim()));
     setIsEditing(false);
   }
 

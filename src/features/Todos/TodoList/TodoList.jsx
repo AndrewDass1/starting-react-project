@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import TodoListItem from './TodoListItem.jsx';
+import { sanitizeText } from '../../../utils/sanitize.js';
 
 export default function TodoList({
   todoList,
@@ -22,7 +23,7 @@ export default function TodoList({
     });
 
     const byFilterTerm = byStatus.filter((t) => {
-      if (!filterTerm.trim()) return true;
+      if (!sanitizeText(filterTerm.trim())) return true;
       return t.title.toLowerCase().includes(filterTerm.toLowerCase());
     });
 
