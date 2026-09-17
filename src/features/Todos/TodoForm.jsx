@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TextInputWithLabel from '../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../utils/todoValidation.js';
+import { sanitizeText } from '../../utils/sanitize.js';
 
 export default function TodoForm({ onAddTodo }) {
   const [title, setTitle] = useState('');
@@ -23,7 +24,7 @@ export default function TodoForm({ onAddTodo }) {
       return;
     }
 
-    await onAddTodo(title.trim());
+    await onAddTodo(sanitizeText(title.trim()));
     setTitle('');
     setErrorMessage('');
   }
