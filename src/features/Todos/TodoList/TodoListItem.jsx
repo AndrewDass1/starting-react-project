@@ -83,7 +83,7 @@ export default function TodoListItem({
             type="checkbox"
             checked={todo.isCompleted}
             onChange={handleCheckbox}
-            className={styles.checkBox}
+            className={styles.checkbox}
           />
 
           <span className={styles.title}>

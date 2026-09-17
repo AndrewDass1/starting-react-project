@@ -54,7 +54,7 @@ export default function TodoList({
   }
 
   return (
-    <ul styles={styles.todoList}>
+    <ul className={styles.todoList}>
       {filteredAndSortedTodos.map((todo) => (
         <TodoListItem
           key={`${todo.id}-${dataVersion}`}
