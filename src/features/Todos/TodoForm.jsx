@@ -2,6 +2,7 @@ import { useState } from 'react';
 import TextInputWithLabel from '../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../utils/todoValidation.js';
 import { sanitizeText } from '../../utils/sanitize.js';
+import styles from '../../button.module.css';
 
 export default function TodoForm({ onAddTodo }) {
   const [title, setTitle] = useState('');
@@ -44,7 +45,7 @@ export default function TodoForm({ onAddTodo }) {
         errorMessage={errorMessage}
         placeholder="Enter a todo title..."
       />
-      <button type="submit" disabled={isDisabled}>
+      <button type="submit" disabled={isDisabled} className={styles.button}>
         ADD TODO
       </button>
     </form>

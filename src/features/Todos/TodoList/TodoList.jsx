@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import TodoListItem from './TodoListItem.jsx';
 import { sanitizeText } from '../../../utils/sanitize.js';
+import styles from '../../../todolist.module.css';
 
 export default function TodoList({
   todoList,
@@ -53,7 +54,7 @@ export default function TodoList({
   }
 
   return (
-    <ul style={{ paddingLeft: 0 }}>
+    <ul styles={styles.todoList}>
       {filteredAndSortedTodos.map((todo) => (
         <TodoListItem
           key={`${todo.id}-${dataVersion}`}

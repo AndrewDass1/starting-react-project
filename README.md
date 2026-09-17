@@ -3,6 +3,9 @@
 ## Project Description
 This repository contains files that will start a To-Do Application. It is made in JavaScript and the front-end JavaScript framework React.js. The user can add todo items to their list they can make, and then can either sort the items in alphabetical order or when they were created in history, from oldest to newest or newest to oldest. The list can also be sorted to show all items, or filter out to show only completed items or items that need to be completed. There are many options on the todo app that allow these options for the user to edit and change their list.
 
+## Live Demo Link
+I did not deploy this app, though I created a short video titled "Andrew Dass To-Do Application and it can be accessed through this link: https://youtu.be/10q-GLYtoqI
+
 ## Features List
 The todo app is capable of sorting its items by doing the following:
 * Has a header that contains links to the following pages: Home, About, and Login
@@ -20,14 +23,10 @@ The todo app is capable of sorting its items by doing the following:
 * Search Todos: There is a text box that if a user types in a letter or an exact word, it will filter the todos that either contain the letter or word that was typed in
 * Show: Gives the user an option to show every todo, or only todos that are completed or todos that are not completed. 
 * Todo: This text box allows users to add todos to the list. When todos are added, the user can click on the todo text to modify the text.
-
-The user can checkmark a todo to make an active todo into a completed todo. They cannot uncheck the todo once it has been marked.
-
-This app only allows a max of 10 todos in a list, so if a new todo is added when there are 10 items, then one existing item will be removed. 
-
-If an error occurs in the application, the user may be directed to the "PAGE NOT FOUND" page.
-
-After a few minutes of inactivity, the user is automatically logged out.
+* The user can checkmark a todo to make an active todo into a completed todo. They cannot uncheck the todo once it has been marked.
+* This app only allows a max of 10 todos in a list, so if a new todo is added when there are 10 items, then one existing item will be removed. 
+* If an error occurs in the application, the user may be directed to the "PAGE NOT FOUND" page.
+* After a few minutes of inactivity, the user is automatically logged out.
 
 ## Technologies Used
 * JavaScript - The programming language used to create this application
