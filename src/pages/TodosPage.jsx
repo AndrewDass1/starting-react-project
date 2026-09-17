@@ -102,7 +102,7 @@ export default function TodosPage() {
   }, [token]);
 
   async function addTodo(title) {
-    const cleanTitle = sanitizeText(title);
+    title = sanitizeText(title);
 
     const response = await fetch('/api/tasks', {
       method: 'POST',
@@ -111,7 +111,7 @@ export default function TodosPage() {
         'X-CSRF-TOKEN': token,
       },
       credentials: 'include',
-      body: JSON.stringify({ cleanTitle }),
+      body: JSON.stringify({ "title": title }),
     });
 
     if (response.ok) {
@@ -121,7 +121,7 @@ export default function TodosPage() {
   }
 
   async function updateTodo(id, title) {
-    const cleanTitle = sanitizeText(title);
+    title = sanitizeText(title);
 
     const response = await fetch(`/api/tasks/${id}`, {
       method: 'PATCH',
@@ -130,7 +130,7 @@ export default function TodosPage() {
         'X-CSRF-TOKEN': token,
       },
       credentials: 'include',
-      body: JSON.stringify({ cleanTitle }),
+      body: JSON.stringify({ "title": title }),
     });
 
     if (response.ok) {
@@ -169,7 +169,7 @@ export default function TodosPage() {
         onSortDirectionChange={setSortDirection}
       />
 
-      <FilterInput filterTerm={filterTerm} onFilterChange={setFilterTerm} />
+      <FilterInput filterTerm={sanitizeText(filterTerm)} onFilterChange={setFilterTerm} />
 
       <StatusFilter />
 
