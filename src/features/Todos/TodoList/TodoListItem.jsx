@@ -75,7 +75,7 @@ export default function TodoListItem({
             SAVE
           </button>
 
-          <button onClick={handleCancel} className=".">CANCEL</button>
+          <button onClick={handleCancel} className={styles.smallButton}>CANCEL</button>
         </>
       ) : (
         <>
