@@ -2,6 +2,7 @@ import { useState } from 'react';
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
 import { sanitizeText } from '../../../utils/sanitize.js';
+import styles from './todolistitem.module.css';
 
 export default function TodoListItem({
   todo,
@@ -13,12 +14,6 @@ export default function TodoListItem({
   const [title, setTitle] = useState(todo.title);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const smallButtonStyle = {
-    marginLeft: '0.5rem',
-    padding: '0.15rem 0.35rem',
-    fontSize: '0.75rem',
-    cursor: 'pointer',
-  };
 
   function handleStartEdit() {
     setIsEditing(true);
@@ -63,7 +58,7 @@ export default function TodoListItem({
   const isSaveDisabled = !valid;
 
   return (
-    <li style={{ marginBottom: '0.75rem' }}>
+    <li className={styles.item}>
       {isEditing ? (
         <>
           <TextInputWithLabel
@@ -76,11 +71,11 @@ export default function TodoListItem({
             errorMessage={errorMessage}
           />
 
-          <button onClick={handleSave} disabled={isSaveDisabled} style={smallButtonStyle}>
+          <button onClick={handleSave} disabled={isSaveDisabled} style={styles.smallButton}>
             SAVE
           </button>
 
-          <button onClick={handleCancel} style={smallButtonStyle}>CANCEL</button>
+          <button onClick={handleCancel} style={styles.smallButton}>CANCEL</button>
         </>
       ) : (
         <>
@@ -88,14 +83,14 @@ export default function TodoListItem({
             type="checkbox"
             checked={todo.isCompleted}
             onChange={handleCheckbox}
-            style={{ marginRight: '0.5rem' }}
+            className={styles.checkBox}
           />
 
-          <span style={{ marginRight: '1rem' }}>
+          <span className={styles.title}>
             {todo.title}
           </span>
 
-          <button onClick={handleStartEdit} style={smallButtonStyle}>EDIT</button>
+          <button onClick={handleStartEdit} style={styles.smallButton}>EDIT</button>
         </>
       )}
     </li>

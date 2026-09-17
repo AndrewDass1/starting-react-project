@@ -1,3 +1,5 @@
+import styles from '../filterinput.module.css';
+
 export default function FilterInput({ filterTerm, onFilterChange }) {
   const tooLong = filterTerm.length > 50;
 
@@ -14,7 +16,7 @@ export default function FilterInput({ filterTerm, onFilterChange }) {
       />
 
     {tooLong && (
-        <p style={{ color: 'red' }}>Filter must be 50 characters or fewer.</p>
+        <p className={styles.error}>Filter must be 50 characters or fewer.</p>
       )}
     </div>
   );
