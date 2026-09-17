@@ -8,6 +8,16 @@ I did not deploy this app, though I created a short video titled "Andrew Dass To
 
 ## Features List
 The todo app is capable of sorting its items by doing the following:
+* Has a header that contains links to the following pages: Home, About, and Login
+  * The home page, shows whether the user is logged or not into the application. Has a button to redirect to the home page too.
+  * About page shows a description of how this app works
+  * Login page is where the user enters their credentials to access their todo list
+* When the user logs in, the header changes to:
+  * Home - Now this page redirects the user to the webpage that contains their todolist
+  * About - Still gives a description of how this app works
+  * Todos - The webpage that contains the user's todolist.
+  * Profile - Shows statistics of how many items, completed or not is available from the total amount of shown data or items
+* The Todos page has these options down below:
 * "Created By" or "Title": Categorizes items from when they were created in time or by title or their wording
 * Order in DESCENDING or ASCENDING: Categorize items in alphabetical order
 * Search Todos: There is a text box that if a user types in a letter or an exact word, it will filter the todos that either contain the letter or word that was typed in
@@ -17,6 +27,8 @@ The todo app is capable of sorting its items by doing the following:
 The user can checkmark a todo to make an active todo into a completed todo. They cannot uncheck the todo once it has been marked.
 
 This app only allows a max of 10 todos in a list, so if a new todo is added when there are 10 items, then one existing item will be removed. 
+
+After a few minutes of inactivity, the user is automatically logged out.
 
 ## Technologies Used
 * JavaScript - The programming language used to create this application
@@ -35,22 +47,48 @@ This app only allows a max of 10 todos in a list, so if a new todo is added when
 * CSS - Style React.js components
 
 ## Screenshots
-Below shows other pages of the application <br>
+Below shows pages of the application on desktop and mobile: <br>
+
+### Home Page
+<img src="./src/snapshots/todo_app_homepage.png" width=400 height=200/>
+
+<img src="./src/snapshots/todoapp_home_mobile.png" width=200 height=200/>
+
+This page shows the first page or the homepage of the application when the user starts running the application. Clicking the "LOG IN" button redirects them to the "LOGIN" page. If they are signed in to the todoapp, then this page changes. 
 
 ### About Page
-<img src="./about.png" />
+<img src="./src/snapshots/todoapp_about.png" width=400 height=200/>
+
+<img src="./src/snapshots/todoapp_about_mobile.png" width=200 height=200/>
+
 This page shows a description of the todo app and how it can be used.
 <br>
 
-### Todo Page
-<img src="./todospage.png" />
+### Login Page
+<img src="./src/snapshots/todoapp_login.png" width=400 height=200 />
+
+<img src="./src/snapshots/todoapp_login_mobile.png" width=200 height=200 />
 <br>
+This page shows where the user can enter their credentials and clicking the "LOG IN" button on this page will make them access the application.
+
+### Home Page Logged In
+<img src="./src/snapshots/todo_app_homepage_logged_in.png" width=400 height=200 />
+
+<img src="./src/snapshots/todo_app_homepage_logged_in_mobile.png" width=200 height=200/>
+
+### Todo Page
+<img src="./src/snapshots/todo_app_todos.png" width=400 height=200 />
+
+<img src="./src/snapshots/todo_app_todos_mobile.png" width=200 height=200 />
+
 The todo page can show all the todos that were or are on the list that was or need to completed respectively. There are different options to either show all items, only completed items or only the items that need to be completed. 
 
 ### Profile Page
-<img src="./profile.png" />
-This page shows the amount of total items on the list, and the ones that are either completed or need to be completed.
+<img src="./src/snapshots/todo_app_profile.png" width=400 height=200 />
 
+<img src="./src/snapshots/todo_app_profile_mobile.png" width=200 height=200 />
+
+This page shows the amount of total items on the list, and the ones that are either completed or need to be completed.
 
 ## Getting Started
 To get started running this application, this sections explains what additional files was added to the basic React.js template to make this application functional and explains how to download this entire repository's files and code in order to run it.<br>
@@ -74,8 +112,7 @@ npm install
 
 After running the command `npm install` the React.js application should start running
 
-Below shows the homepage or the login page, of the application:
-<img src="./todo_app_homepage.png" />
+If ran successfully, the user should expect to see the homepage or login page
 
 ## Available Scripts
 The package.json scripts section is configured as shown down below:
@@ -99,7 +136,11 @@ Four npm commands that can be run within this repository. It can perform the fol
  
 
 ## Design Decisions
-This application is meant to have a simple UI, where the user can see and navigate this application easily when they run it. When they first run the application, they are prompted to enter their login credentials. If they want to explore other parts of the website, the header is included at the top center of the page to show or navigate through other webpages. I customized the background to be a light green color, and the text's font and color is changed to Arial and gray respectively. The buttons on the website have also changed, where the font color is purple, the background of the button is lightblue and the button's text is also Arial. If the user hovers the mouse over the button, the button's background color changes to a light yellow. The checkbox size has been edited so it appears bigger length-wise than usual. I added .module.css files to change the designs of HTML webpage and components.
+This application is meant to have a simple UI, where the user can see and navigate this application easily when they run it. When they first run the application, they are shown the homepage. There is a header that makes the user either choose to navigate between the home, about or login pages. The homepage's login button redirect the user to the "Login" page, where they enter their credentials to enter the todo app. The about page shows a description how the application works. 
+
+When the user logs in, the homepage changes, and then they are navigated to the todos page, which contains their todo list. The header also changes to four options where the user can choose to enter one of the four pages: Home, About, Todos, and Profile. Profile page shows how many items from a percentage is either completed or not from the list.  
+
+The body or background of the application's color is changed to a light green and the text color is changed to gray. The buttons are also styled, where they have purple text, the box itself is bigger, has a light blue background and when the user's mouse is hovered over the button, it has a light yellow background. The header or navigation links, where it redirects the user to different webpages of the website, is purple text. I believe having a light green background would make it stand out but its not too bright, which I thought having gray text would be acceptable since I wanted to choose a different color that's slightly lighter that would go well with green and something that would not strain a person's eyes when reading. To design the buttons, I chose a light background, either light blue or yellow, and then I need a dark color for the text since the background is light, and something that goes well with green as well, so that is why purple was chosen. All text that is built into the UI, is capitalized because I believed it would stand out more for the user to read it better and personally, I like the capitalized letters more too. The only text that is not capitalized are full written sentences. 
 
 ## Future Improvements
 Improvements that can be done to this app, is, next time, I'll implement more features such as displaying the time and date of when a particular todo item was added to the list. Also, when an item is checked marked, I would implement for it to be unchecked and if an item needs to be removed or deleted, I would implement that as well. Also, there are many files in this application, I would try to reduce the amount of files. 
