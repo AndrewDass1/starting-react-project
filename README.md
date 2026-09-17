@@ -4,8 +4,7 @@
 This repository contains files that will start a To-Do Application. It is made in JavaScript and the front-end JavaScript framework React.js. The user can add todo items to their list they can make, and then can either sort the items in alphabetical order or when they were created in history, from oldest to newest or newest to oldest. The list can also be sorted to show all items, or filter out to show only completed items or items that need to be completed. There are many options on the todo app that allow these options for the user to edit and change their list.
 
 ## Live Demo Link
-I did not deploy this app since the assignment stated that deployment is optional. Instead, I created a short video titled "Andrew Dass To-Do Application and it can be accessed through this link: https://youtu.be/10q-GLYtoqI <br>
-Once again, I didn't deploy my application, I just made a short video running it locally on my machine, showcasing how the app works.
+I did not deploy this app since the assignment stated that deployment is optional. There is no live demo link for this application. 
 
 ## Features List
 The todo app is capable of sorting its items by doing the following:
