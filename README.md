@@ -28,6 +28,8 @@ The user can checkmark a todo to make an active todo into a completed todo. They
 
 This app only allows a max of 10 todos in a list, so if a new todo is added when there are 10 items, then one existing item will be removed. 
 
+If an error occurs in the application, the user may be directed to the "PAGE NOT FOUND" page.
+
 After a few minutes of inactivity, the user is automatically logged out.
 
 ## Technologies Used
@@ -42,7 +44,7 @@ After a few minutes of inactivity, the user is automatically logged out.
     * useEffect - Add additional side effects to components when interacting with them
     * useLocation - Retrieve a location's object
     * useAuth - Enables and checks for a user's authentication is correct when trying to sign in
-* vite - Was downloaded to run and use, vite.config.js, which changed the default port to run this app on 3000. 
+* vite - Was downloaded to run and use, vite.config.js, which changed the default port to run this app on 3001. 
 * HTML - index.html is used to support React.js file structure
 * CSS - Style React.js components
 
@@ -89,6 +91,13 @@ The todo page can show all the todos that were or are on the list that was or ne
 <img src="./src/snapshots/todo_app_profile_mobile.png" width=200 height=200 />
 
 This page shows the amount of total items on the list, and the ones that are either completed or need to be completed.
+
+### Not Found Page
+<img src="./src/snapshots/todo_app_notfound.png" width=400 height=200 />
+
+<img src="./src/snapshots/todo_app_notfound_mobile.png" width=400 height=200 />
+
+This page is shown when an error occurs in the application. The user is then recommended to either the Home, About or Login page, and the user has to sign in again. 
 
 ## Getting Started
 To get started running this application, this sections explains what additional files was added to the basic React.js template to make this application functional and explains how to download this entire repository's files and code in order to run it.<br>
@@ -138,9 +147,9 @@ Four npm commands that can be run within this repository. It can perform the fol
 ## Design Decisions
 This application is meant to have a simple UI, where the user can see and navigate this application easily when they run it. When they first run the application, they are shown the homepage. There is a header that makes the user either choose to navigate between the home, about or login pages. The homepage's login button redirect the user to the "Login" page, where they enter their credentials to enter the todo app. The about page shows a description how the application works. 
 
-When the user logs in, the homepage changes, and then they are navigated to the todos page, which contains their todo list. The header also changes to four options where the user can choose to enter one of the four pages: Home, About, Todos, and Profile. Profile page shows how many items from a percentage is either completed or not from the list.  
+When the user logs in, the homepage changes, and then they are navigated to the todos page, which contains their todo list. The header also changes to four options where the user can choose to enter one of the four pages: Home, About, Todos, and Profile. Profile page shows how many items from a percentage is either completed or not from the list. If an errors anywhere, then the user is directed to the notfound page.
 
-The body or background of the application's color is changed to a light green and the text color is changed to gray. The buttons are also styled, where they have purple text, the box itself is bigger, has a light blue background and when the user's mouse is hovered over the button, it has a light yellow background. The header or navigation links, where it redirects the user to different webpages of the website, is purple text. I believe having a light green background would make it stand out but its not too bright, which I thought having gray text would be acceptable since I wanted to choose a different color that's slightly lighter that would go well with green and something that would not strain a person's eyes when reading. To design the buttons, I chose a light background, either light blue or yellow, and then I need a dark color for the text since the background is light, and something that goes well with green as well, so that is why purple was chosen. All text that is built into the UI, is capitalized because I believed it would stand out more for the user to read it better and personally, I like the capitalized letters more too. The only text that is not capitalized are full written sentences. 
+The body or background of the application's color is changed to a light green and the text color is changed to gray. The buttons are also styled, where they have purple text, the box itself is bigger, has a light blue background and when the user's mouse is hovered over the button, it has a light yellow background. The header or navigation links, where it redirects the user to different webpages of the website, is purple text. I believe having a light green background would make it stand out but its not too bright, which I thought having gray text would be acceptable since I wanted to choose a different color that's slightly lighter that would go well with green and something that would not strain a person's eyes when reading. To design the buttons, I chose a light background, either light blue or yellow, and then I need a dark color for the text since the background is light, and something that goes well with green as well, so that is why purple was chosen. All text that is built into the UI, is capitalized because I believed it would stand out more for the user to read it better and personally, I like the capitalized letters more too. The only text that is not capitalized are some written sentences. I centered the title, header and logout buttons in the middle of the page, to show this is the important information that the user can access in this application and the information that each of the pages display, is not centered and found towards the left of the page. 
 
 ## Future Improvements
 Improvements that can be done to this app, is, next time, I'll implement more features such as displaying the time and date of when a particular todo item was added to the list. Also, when an item is checked marked, I would implement for it to be unchecked and if an item needs to be removed or deleted, I would implement that as well. Also, there are many files in this application, I would try to reduce the amount of files. 

@@ -7,18 +7,18 @@ export default function Header() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <>
-      <h1 className={styles.appTitle}>TODO APP</h1>
+    <header className={styles.headerContainer}>
+      <div>
+        <h1 className={styles.appTitle}>TODO APP</h1>
 
-      <header className={styles.headerContainer}>
         <Navigation />
-      </header>
 
-      {isAuthenticated && (
-        <div className={styles.logoutContainer}>
-          <Logoff />
-        </div>
-      )}
-    </>
+        {isAuthenticated && (
+          <div className={styles.logoutContainer}>
+            <Logoff />
+          </div>
+        )}
+      </div>
+    </header>
   );
 }
