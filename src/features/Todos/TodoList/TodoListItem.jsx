@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
 import { isValidTodoTitle } from '../../../utils/todoValidation.js';
 import { sanitizeText } from '../../../utils/sanitize.js';
-import styles from './todolistitem.module.css';
+import styles from '../../../todolistitem.module.css';
 
 export default function TodoListItem({
   todo,
@@ -71,11 +71,11 @@ export default function TodoListItem({
             errorMessage={errorMessage}
           />
 
-          <button onClick={handleSave} disabled={isSaveDisabled} style={styles.smallButton}>
+          <button onClick={handleSave} disabled={isSaveDisabled} className={styles.smallButton}>
             SAVE
           </button>
 
-          <button onClick={handleCancel} style={styles.smallButton}>CANCEL</button>
+          <button onClick={handleCancel} className=".">CANCEL</button>
         </>
       ) : (
         <>
@@ -90,7 +90,7 @@ export default function TodoListItem({
             {todo.title}
           </span>
 
-          <button onClick={handleStartEdit} style={styles.smallButton}>EDIT</button>
+          <button onClick={handleStartEdit} className={styles.smallButton}>EDIT</button>
         </>
       )}
     </li>
