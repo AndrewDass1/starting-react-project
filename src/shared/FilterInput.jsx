@@ -1,4 +1,6 @@
 export default function FilterInput({ filterTerm, onFilterChange }) {
+  const tooLong = filterTerm.length > 50;
+
   return (
     <div>
       <label htmlFor="filterInput">SEARCH TODOS:</label>
@@ -10,6 +12,10 @@ export default function FilterInput({ filterTerm, onFilterChange }) {
         placeholder="Search by title..."
         maxLength={50}
       />
+
+    {tooLong && (
+        <p style={{ color: 'red' }}>Filter must be 50 characters or fewer.</p>
+      )}
     </div>
   );
 }

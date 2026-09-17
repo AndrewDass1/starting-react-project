@@ -8,6 +8,8 @@ import FilterInput from '../shared/FilterInput.jsx';
 import TodoList from '../features/Todos/TodoList/TodoList.jsx';
 import TodoForm from '../features/Todos/TodoForm.jsx';
 
+import { sanitizeText } from '../utils/sanitize.js';
+
 const initialState = {
   todoList: [],
   dataVersion: 0,
@@ -175,7 +177,7 @@ export default function TodosPage() {
         statusFilter={statusFilter}
         sortBy={sortBy}
         sortDirection={sortDirection}
-        filterTerm={filterTerm}
+        filterTerm={sanitizeText(filterTerm)}
         onUpdateTodo={updateTodo}
         onCompleteTodo={completeTodo}
       />
