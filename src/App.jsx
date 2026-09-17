@@ -11,11 +11,11 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 
 import RequireAuth from './components/RequireAuth.jsx';
 
-import styles from './body.module.css';
+import './body.css';
 
 function App() {
   return (
-    <div className={styles.body}>
+    <div>
       <Header />
 
       <Routes>
