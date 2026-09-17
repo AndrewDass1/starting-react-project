@@ -7,3 +7,22 @@ input {
   height: 20px;
   width: 30px;
 }
+
+.item {
+  margin-bottom: 0.75rem;
+}
+
+.checkbox {
+  margin-right: 0.5rem;
+}
+
+.title {
+  margin-right: 1rem;
+}
+
+.smallButton {
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
