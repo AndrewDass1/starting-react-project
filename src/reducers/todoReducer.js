@@ -22,6 +22,10 @@ export const TODO_ACTIONS = {
   CLEAR_FILTER_ERROR: 'CLEAR_FILTER_ERROR',
 
   RESET_FILTERS: 'RESET_FILTERS',
+
+  UNCOMPLETE_TODO_START: 'UNCOMPLETE_TODO_START',
+  UNCOMPLETE_TODO_SUCCESS: 'UNCOMPLETE_TODO_SUCCESS',
+  UNCOMPLETE_TODO_ERROR: 'UNCOMPLETE_TODO_ERROR',
 };
 
 export const initialTodoState = {
@@ -179,6 +183,40 @@ export function todoReducer(state, action) {
         ...state,
         filterError: '',
       };
+
+    case TODO_ACTIONS.UNCOMPLETE_TODO_START:
+      return {
+        ...state,
+        error: '',
+        filterError: '',
+        todoList: state.todoList.map((t) =>
+          t.id === action.payload.id
+            ? { ...t, isCompleted: false }
+            : t
+        ),
+      };
+
+    case TODO_ACTIONS.UNCOMPLETE_TODO_SUCCESS:
+      return {
+        ...state,
+        todoList: state.todoList.map((t) =>
+          t.id === action.payload.id
+            ? action.payload.savedTodo
+            : t
+        ),
+      };
+
+    case TODO_ACTIONS.UNCOMPLETE_TODO_ERROR:
+      return {
+        ...state,
+        error: action.payload.message,
+        todoList: state.todoList.map((t) =>
+          t.id === action.payload.id
+            ? action.payload.originalTodo
+            : t
+        ),
+      };
+
 
     default:
       throw new Error(`Unknown action type: ${action.type}`);
